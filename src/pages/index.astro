@@ -1,0 +1,1167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Growlity.ai — ESG Growth Intelligence</title>
+<!-- AOS CSS -->
+<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+<style>
+/* ============================================================
+   RESET + TOKENS
+   ============================================================ */
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  /* GROWLITY THEME (LIGHT MODE) */
+  --forest:   #ffffff;        /* Main Background */
+  --panel:    #f8fafc;        /* Secondary Background */
+  --jade:     #4186f3;        /* Primary Brand Blue */
+  --secondary:#3eac5c;        /* Secondary Brand Green */
+  --bone:     #0f172a;        /* Main Text Color */
+  --ink:      #ffffff;        /* Inverted Text Color (White) */
+  --white:    #0f172a;        /* Titles and contrast elements (Dark) */
+  --pure-white: #ffffff;      /* Actual White */
+  --line:     rgba(65, 134, 243, 0.15); /* Brand Blue borders */
+  --text-dim: #475569;        /* Muted Text */
+  --text-dim2:#94a3b8;        /* Very Muted Text */
+
+  --font-display: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --font-body: "Helvetica Neue", Helvetica, Arial, sans-serif;
+
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 18px;
+  --container: 1100px;
+}
+
+html { scroll-behavior: smooth; }
+body { font-family: var(--font-body); background: var(--forest); color: var(--bone); }
+a { color: inherit; }
+ul { list-style: none; }
+.con { max-width: var(--container); margin: 0 auto; }
+
+/* ============================================================
+   REUSABLE PRIMITIVES
+   ============================================================ */
+.card {
+  background: var(--pure-white);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.05);
+}
+.card:hover { border-color: var(--jade); box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.08); }
+
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  padding: 12px 26px; border-radius: var(--radius-sm);
+  font-size: 14px; font-weight: 700; text-decoration: none;
+  transition: transform .15s ease, box-shadow .15s ease, background .15s ease;
+}
+.btn-primary { background: var(--jade); color: var(--ink); }
+.btn-primary:hover { transform: translateY(-2px); box-shadow: 0 12px 28px rgba(65, 134, 243,.25); }
+.btn-secondary {
+  background: var(--secondary); color: var(--pure-white); font-weight: 500; border: none;
+}
+.btn-secondary:hover { transform: translateY(-2px); box-shadow: 0 12px 28px rgba(62, 172, 92, .25); }
+
+.eyebrow {
+  font-size: 11px; letter-spacing: 1.2px; text-transform: uppercase;
+  font-weight: 600; color: var(--jade); margin-bottom: 10px;
+}
+.section-title {
+  font-family: var(--font-display); font-weight: 800;
+  font-size: clamp(28px, 3vw, 42px); line-height: 1.15; letter-spacing: -1px;
+  color: var(--white); max-width: 640px; margin-bottom: 14px;
+}
+.section-sub {
+  font-size: 15px; line-height: 1.7; color: var(--text-dim);
+  max-width: 480px; margin-bottom: 48px;
+}
+.center { text-align: center; }
+.center .section-title, .center .section-sub { max-width: 600px; margin-left: auto; margin-right: auto; }
+
+.section { padding: 88px 32px; }
+.section--light { background: #f1f5f9; color: var(--bone); }
+.section--light .eyebrow { color: var(--secondary); }
+.section--light .section-title { color: var(--bone); }
+.section--light .section-sub { color: var(--text-dim); }
+.section--panel { background: var(--panel); }
+
+@media (max-width: 860px) { .section { padding: 56px 20px; } }
+
+/* ============================================================
+   NAV
+   ============================================================ */
+nav {
+  position: fixed; top: 0; width: 100%; z-index: 200; height: 62px;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 32px;
+  background: rgba(255,255,255,.88); backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--line);
+}
+.logo {
+  display: flex; align-items: center; gap: 9px;
+  font-family: var(--font-display); font-weight: 700; font-size: 18px;
+  letter-spacing: -.3px; text-decoration: none; color: var(--white);
+}
+.logo em { font-style: normal; color: var(--jade); }
+.logo-mark {
+  width: 28px; height: 28px; border-radius: 7px; background: var(--jade);
+  display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+}
+.logo-mark svg { width: 15px; height: 15px; }
+
+.nav-links { display: flex; align-items: center; gap: 28px; }
+.nav-links a { font-size: 13.5px; font-weight: 500; color: var(--text-dim); text-decoration: none; }
+.nav-links a:hover { color: var(--white); }
+
+.nav-end { display: flex; align-items: center; gap: 8px; }
+.n-signin { font-size: 13.5px; color: var(--text-dim); text-decoration: none; padding: 7px 14px; }
+.n-signin:hover { color: var(--white); }
+
+@media (max-width: 860px) { nav { padding: 0 20px; } .nav-links { display: none; } }
+
+/* ============================================================
+   HERO
+   ============================================================ */
+.hero {
+  min-height: 92vh; display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  padding: 110px 24px 56px; text-align: center; position: relative;
+}
+.hero::before {
+  content: ''; position: absolute; top: -100px; left: 50%; transform: translateX(-50%);
+  width: 800px; height: 480px;
+  background: radial-gradient(ellipse at center, rgba(30,224,127,.12) 0%, transparent 65%);
+  pointer-events: none;
+}
+
+.hero-badge {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 5px 14px; border-radius: 99px; border: 1px solid var(--line);
+  background: rgba(30,224,127,.06);
+  font-size: 11.5px; font-weight: 600; letter-spacing: .8px; text-transform: uppercase;
+  color: var(--jade); margin-bottom: 24px; position: relative;
+}
+
+h1 {
+  font-family: var(--font-display); font-weight: 800;
+  font-size: clamp(32px, 4.2vw, 56px); line-height: 1.12; letter-spacing: -1.3px;
+  color: var(--white); max-width: 780px; margin-bottom: 18px; position: relative;
+}
+h1 .hl { color: var(--secondary); }
+
+.hero-sub {
+  font-size: 16px; line-height: 1.7; color: var(--text-dim);
+  max-width: 500px; margin-bottom: 32px; position: relative;
+}
+
+.hero-btns { display: flex; gap: 12px; margin-bottom: 44px; position: relative; }
+
+.hero-trust {
+  display: flex; gap: 22px; flex-wrap: wrap; justify-content: center;
+  font-size: 12.5px; color: var(--text-dim2); margin-bottom: 52px; position: relative;
+}
+.hero-trust span { display: flex; align-items: center; gap: 6px; }
+.hero-trust span::before { content: '✓'; color: var(--jade); font-size: 12px; }
+
+@media (max-width: 860px) {
+  .hero-btns { flex-direction: column; width: 100%; }
+  .btn { width: 100%; }
+}
+
+/* ----- Product preview ----- */
+.screen-wrap { width: 100%; max-width: 1020px; position: relative; }
+.browser {
+  border-radius: 12px; overflow: hidden; border: 1px solid var(--line);
+  box-shadow: 0 30px 80px rgba(0,0,0,.55);
+}
+.browser-bar {
+  background: var(--panel); height: 38px; display: flex; align-items: center;
+  padding: 0 14px; gap: 7px; border-bottom: 1px solid var(--line);
+}
+.bt { width: 10px; height: 10px; border-radius: 50%; }
+.bt-r { background: #ff5f57; } .bt-y { background: #febc2e; } .bt-g { background: #28c840; }
+.b-url {
+  flex: 1; margin: 0 12px; background: rgba(0,0,0,.05); border-radius: 5px;
+  height: 21px; display: flex; align-items: center; padding: 0 10px;
+  font-size: 11px; color: var(--text-dim); font-family: monospace;
+}
+.ai-badge {
+  font-size: 11px; font-weight: 600; padding: 3px 10px; border-radius: 5px;
+  background: rgba(65,134,243,.12); color: var(--jade); border: 1px solid var(--line);
+}
+
+.dash {
+  display: grid; grid-template-columns: 190px 1fr; grid-template-rows: 42px 1fr;
+  background: var(--pure-white); height: 480px;
+}
+.db-side {
+  grid-row: 1 / 3; background: var(--panel); border-right: 1px solid var(--line);
+  padding: 16px 10px; display: flex; flex-direction: column; gap: 2px;
+}
+.db-brand {
+  font-family: var(--font-display); font-weight: 800; font-size: 13px;
+  color: var(--jade); margin-bottom: 18px; padding: 0 6px;
+}
+.nav-i {
+  display: flex; align-items: center; gap: 9px; padding: 8px 10px;
+  border-radius: 6px; font-size: 12px; color: var(--text-dim);
+}
+.nav-i.on { background: rgba(65,134,243,.1); color: var(--jade); }
+.db-sep { height: 1px; background: var(--line); margin: 8px 0; }
+
+.db-top {
+  grid-column: 2; background: var(--pure-white); border-bottom: 1px solid var(--line);
+  display: flex; align-items: center; justify-content: space-between; padding: 0 18px;
+}
+.db-top h3 { font-family: var(--font-display); font-weight: 700; font-size: 14px; color: var(--bone); }
+.db-pills { display: flex; gap: 6px; }
+.dp { padding: 4px 11px; border-radius: 20px; font-size: 11px; font-weight: 500;
+      background: rgba(0,0,0,.04); color: var(--text-dim); }
+.dp.on { background: rgba(65,134,243,.1); color: var(--jade); }
+
+.db-main {
+  grid-column: 2; padding: 14px 16px;
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px;
+}
+.kpi { padding: 13px; }
+.kpi-lbl { font-size: 10px; color: var(--text-dim); letter-spacing: .5px; text-transform: uppercase; margin-bottom: 8px; }
+.kpi-val { font-family: var(--font-display); font-weight: 800; font-size: 21px; color: var(--bone); }
+.kpi-val .u { font-size: 11px; color: var(--text-dim2); margin-left: 3px; }
+.kpi-d { font-size: 11px; font-weight: 600; color: var(--secondary); margin-top: 4px; }
+
+.chart-wide { grid-column: 1 / 3; padding: 13px; }
+.ct-title { font-size: 10px; font-weight: 600; color: var(--text-dim); text-transform: uppercase; margin-bottom: 12px; }
+.bars { display: flex; align-items: flex-end; gap: 6px; height: 76px; }
+.bar-c { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 3px; }
+.bar-f { width: 100%; border-radius: 3px 3px 0 0; background: var(--jade); }
+
+.ring-card { padding: 13px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; }
+.ring-wrap { position: relative; width: 68px; height: 68px; }
+.ring-wrap svg { transform: rotate(-90deg); }
+.ring-center { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+.ring-num { font-family: var(--font-display); font-weight: 800; font-size: 17px; color: var(--secondary); }
+.ring-sub { font-size: 8px; color: var(--text-dim2); }
+.ring-lbl { font-size: 10px; color: var(--text-dim); text-align: center; }
+
+.fw-card { grid-column: 4; padding: 13px; }
+.fw-title { font-size: 10px; font-weight: 600; color: var(--text-dim); text-transform: uppercase; margin-bottom: 10px; }
+.fw-badge {
+  display: inline-block; padding: 3px 9px; border-radius: 5px; font-size: 10px;
+  font-weight: 700; margin: 2px; background: rgba(65,134,243,.1); color: var(--jade);
+}
+
+@media (max-width: 860px) {
+  .dash { height: 340px; }
+  .db-main { grid-template-columns: 1fr 1fr; }
+}
+
+/* ============================================================
+   LOGOS
+   ============================================================ */
+.logos-band {
+  background: var(--pure-white); border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line); padding: 26px 32px;
+}
+.logos-lbl {
+  text-align: center; font-size: 11px; letter-spacing: 1px; text-transform: uppercase;
+  color: var(--text-dim); margin-bottom: 22px;
+}
+.logos-row { display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 32px; }
+.l-name { font-family: var(--font-display); font-weight: 700; font-size: 14px; color: var(--text-dim); }
+
+/* ============================================================
+   FEATURE GRID
+   ============================================================ */
+.feat-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+.fc { padding: 26px 22px; }
+.section--light .fc { background: var(--pure-white); border-color: rgba(0,0,0,.08); }
+.fi {
+  width: 40px; height: 40px; border-radius: 10px; background: rgba(65,134,243,.1);
+  display: flex; align-items: center; justify-content: center; font-size: 19px; margin-bottom: 16px;
+}
+.section--light .fi { background: rgba(65,134,243,.1); }
+.ft { font-family: var(--font-display); font-weight: 700; font-size: 16px; color: var(--bone); margin-bottom: 8px; }
+.section--light .ft { color: var(--bone); }
+.fd { font-size: 13.5px; line-height: 1.6; color: var(--text-dim); }
+.section--light .fd { color: var(--text-dim); }
+.fc-tag {
+  display: inline-block; margin-top: 14px; font-size: 10.5px; font-weight: 600;
+  padding: 3px 10px; border-radius: 5px; background: rgba(62, 172, 92, 0.1); color: var(--secondary);
+}
+.section--light .fc-tag { background: rgba(62, 172, 92, 0.1); color: var(--secondary); }
+
+@media (max-width: 860px) { .feat-grid { grid-template-columns: 1fr; } }
+
+/* ============================================================
+   STEPS
+   ============================================================ */
+.steps { display: grid; grid-template-columns: repeat(3,1fr); gap: 32px; position: relative; }
+.steps::before {
+  content: ''; position: absolute; top: 36px; left: 16.6%; right: 16.6%; height: 1px;
+  background: linear-gradient(90deg, transparent, var(--line), transparent);
+}
+.step { text-align: center; padding: 0 14px; position: relative; }
+.step-n {
+  width: 72px; height: 72px; border-radius: 50%; border: 2px solid var(--line);
+  background: rgba(30,224,127,.06); display: flex; align-items: center; justify-content: center;
+  margin: 0 auto 20px; font-family: var(--font-display); font-weight: 800; font-size: 22px; color: var(--secondary);
+}
+.step-t { font-family: var(--font-display); font-weight: 700; font-size: 16px; margin-bottom: 10px; color: var(--ink); }
+.step-d { font-size: 13.5px; line-height: 1.6; color: rgba(14,26,18,.55); }
+
+@media (max-width: 860px) { .steps { grid-template-columns: 1fr; gap: 28px; } .steps::before { display: none; } }
+
+/* ============================================================
+   SPLIT SECTIONS
+   ============================================================ */
+.split { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center; }
+.split.flip { direction: rtl; }
+.split.flip > * { direction: ltr; }
+.split-vis { border-radius: 14px; overflow: hidden; border: 1px solid var(--line); box-shadow: 0 24px 64px rgba(0,0,0,.4); }
+.section--light .split-vis { border-color: rgba(0,0,0,.1); box-shadow: 0 20px 48px rgba(0,0,0,.1); }
+
+.tick-list { display: flex; flex-direction: column; gap: 12px; margin-top: 22px; }
+.tick-list li { display: flex; gap: 11px; font-size: 14px; line-height: 1.6; color: var(--text-dim); }
+.section--light .tick-list li { color: rgba(14,26,18,.6); }
+.tick-list li::before {
+  content: '✓'; flex-shrink: 0; width: 19px; height: 19px; margin-top: 1px;
+  border-radius: 50%; background: rgba(62, 172, 92, 0.15); color: var(--secondary);
+  font-size: 10px; font-weight: 700; display: flex; align-items: center; justify-content: center;
+}
+
+.mv, .mv-b { padding: 20px; }
+.mv { background: var(--panel); border: 1px solid var(--line); border-radius: 12px; }
+.mv-b { background: var(--pure-white); border: 1px solid var(--line); border-radius: 12px; }
+.mv-eyebrow { font-size: 10px; letter-spacing: .7px; text-transform: uppercase; font-weight: 600; margin-bottom: 12px; }
+.mv .mv-eyebrow { color: var(--jade); }
+.mv-b .mv-eyebrow { color: var(--jade); }
+
+.mv-row { display: flex; gap: 10px; margin-bottom: 10px; }
+.mv-pill { flex: 1; border-radius: 10px; padding: 12px; background: var(--pure-white); border: 1px solid var(--line); box-shadow: 0 2px 4px rgb(0 0 0 / 0.02); }
+.mv-pill .v { font-family: var(--font-display); font-weight: 800; font-size: 19px; color: var(--secondary); }
+.mv-pill .k { font-size: 10px; color: var(--text-dim); margin-top: 2px; text-transform: uppercase; }
+
+.mini-bars { display: flex; align-items: flex-end; gap: 5px; height: 68px; padding: 0 2px; background: rgba(65,134,243,.05); border-radius: 7px; margin-top: 10px; }
+.mb { flex: 1; border-radius: 3px 3px 0 0; background: var(--jade); }
+
+.tag-row { margin-top: 10px; display: flex; gap: 8px; flex-wrap: wrap; }
+.tag-chip { font-size: 9px; color: var(--jade); background: rgba(65,134,243,.1); padding: 3px 8px; border-radius: 4px; }
+
+.ri {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 11px 13px; background: var(--pure-white); border-radius: 9px;
+  margin-bottom: 7px; border: 1px solid var(--line);
+}
+.ri .rn { font-size: 12.5px; font-weight: 600; color: var(--bone); }
+.ri .rs { font-size: 10.5px; color: var(--text-dim); margin-top: 1px; }
+.rbadge { font-size: 10px; font-weight: 600; padding: 3px 9px; border-radius: 20px; }
+.rb-g { background: #e0f2fe; color: #0284c7; }
+.rb-progress { background: #fef3c7; color: #d97706; }
+
+@media (max-width: 860px) { .split, .split.flip { grid-template-columns: 1fr; direction: ltr; gap: 28px; } }
+
+/* ============================================================
+   STATS
+   ============================================================ */
+.stats-wrap { background: var(--pure-white); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); padding: 52px 32px; }
+.stats-grid { max-width: var(--container); margin: 0 auto; display: grid; grid-template-columns: repeat(4,1fr); }
+.si { text-align: center; padding: 0 18px; border-right: 1px solid var(--line); }
+.si:last-child { border-right: none; }
+.si-n { font-family: var(--font-display); font-weight: 800; font-size: 40px; color: var(--secondary); letter-spacing: -1px; }
+.si-l { font-size: 12.5px; color: var(--text-dim); line-height: 1.5; margin-top: 6px; }
+
+@media (max-width: 860px) {
+  .stats-grid { grid-template-columns: repeat(2,1fr); }
+  .si { border-right: none; border-bottom: 1px solid var(--line); padding: 18px; }
+}
+
+/* ============================================================
+   TESTIMONIALS
+   ============================================================ */
+.tg { display: grid; grid-template-columns: repeat(3,1fr); gap: 16px; }
+.tc { padding: 24px; }
+.t-stars { color: var(--secondary); font-size: 12px; margin-bottom: 12px; }
+.t-q { font-size: 13.5px; line-height: 1.65; color: var(--text-dim); margin-bottom: 18px; }
+.t-a { display: flex; align-items: center; gap: 11px; }
+.t-av {
+  width: 36px; height: 36px; border-radius: 50%; flex-shrink: 0;
+  font-family: var(--font-display); font-weight: 800; font-size: 13px;
+  display: flex; align-items: center; justify-content: center; background: var(--jade); color: var(--ink);
+}
+.t-name { font-size: 13px; font-weight: 600; color: var(--white); }
+.t-role { font-size: 11px; color: var(--text-dim2); margin-top: 1px; }
+
+@media (max-width: 860px) { .tg { grid-template-columns: 1fr; } }
+
+/* ============================================================
+   PRICING
+   ============================================================ */
+.pricing-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; max-width: 880px; margin: 0 auto; }
+.pc { padding: 34px 30px; position: relative; }
+.pc.featured { border-color: rgba(65,134,243,.4); background: rgba(65,134,243,.03); }
+.pc.featured::before {
+  content: 'MOST POPULAR'; position: absolute; top: 18px; right: 20px;
+  font-size: 9px; font-weight: 700; letter-spacing: 1px; color: var(--pure-white);
+  background: var(--jade); padding: 3px 10px; border-radius: 20px;
+}
+.pc-badge {
+  font-size: 10px; font-weight: 700; letter-spacing: .8px; text-transform: uppercase;
+  color: var(--jade); background: rgba(65,134,243,.1); border: 1px solid var(--line);
+  display: inline-block; padding: 4px 12px; border-radius: 20px; margin-bottom: 16px;
+}
+.pc-name { font-family: var(--font-display); font-weight: 800; font-size: 23px; color: var(--bone); margin-bottom: 8px; }
+.pc-ideal { font-size: 13px; line-height: 1.6; color: var(--text-dim); margin-bottom: 26px; min-height: 40px; }
+.pc-divider { height: 1px; background: var(--line); margin-bottom: 24px; }
+.pc-features { display: flex; flex-direction: column; gap: 13px; margin-bottom: 28px; }
+.pc-features li { display: flex; align-items: flex-start; gap: 10px; font-size: 13.5px; line-height: 1.55; color: var(--bone); }
+.pc-features li.off { color: var(--text-dim2); }
+.pc-features .note { display: block; font-size: 11.5px; color: var(--text-dim); padding-left: 28px; }
+.chk {
+  width: 17px; height: 17px; border-radius: 50%; flex-shrink: 0; margin-top: 1px;
+  background: rgba(62, 172, 92, 0.15); color: var(--secondary);
+  display: flex; align-items: center; justify-content: center; font-size: 10px;
+}
+.chk.na { background: rgba(0,0,0,.05); color: rgba(0,0,0,.2); }
+.pc-inherit {
+  font-size: 11.5px; font-weight: 600; color: var(--jade);
+  background: rgba(65,134,243,.05); border: 1px solid var(--line);
+  border-radius: 8px; padding: 9px 14px; margin-bottom: 16px;
+}
+.pc-purpose { background: rgba(0,0,0,.02); border-radius: 10px; padding: 16px; margin-bottom: 26px; border: 1px solid var(--line); }
+.pc-purpose-label { font-size: 9.5px; font-weight: 700; letter-spacing: .8px; text-transform: uppercase; color: var(--jade); margin-bottom: 6px; }
+.pc-purpose p { font-size: 13px; line-height: 1.6; color: var(--text-dim); }
+.pc-cta { display: block; text-align: center; }
+.pc-cta.outline { border: 1px solid var(--line); color: var(--jade); background: none; }
+.pc-cta.outline:hover { background: rgba(65,134,243,.05); }
+
+@media (max-width: 860px) { .pricing-grid { grid-template-columns: 1fr; } }
+
+/* ============================================================
+   CONTACT FORM
+   ============================================================ */
+.contact-wrap { max-width: 520px; margin: 0 auto; padding: 40px; }
+.cf-row { margin-bottom: 18px; }
+.cf-label { display: block; font-size: 12px; font-weight: 600; color: var(--text-dim); margin-bottom: 8px; }
+.cf-input {
+  width: 100%; padding: 12px 16px; background: var(--pure-white);
+  border: 1px solid var(--line); border-radius: 9px; color: var(--bone);
+  font-size: 14px; font-family: var(--font-body); outline: none;
+  transition: border-color .15s;
+}
+.cf-input::placeholder { color: var(--text-dim2); }
+.cf-input:focus { border-color: var(--jade); box-shadow: 0 0 0 2px rgba(65,134,243,.2); }
+.cf-submit {
+  width: 100%; padding: 14px; background: var(--jade); color: var(--pure-white);
+  border: none; border-radius: 9px; font-size: 15px; font-weight: 700;
+  font-family: var(--font-body); cursor: pointer; margin-top: 6px; transition: transform .15s;
+}
+.cf-submit:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(65,134,243,.2); }
+.cf-success {
+  display: none; text-align: center; padding: 26px;
+  background: rgba(65,134,243,.05); border: 1px solid var(--line); border-radius: 12px;
+}
+.cf-success .icon { font-size: 32px; margin-bottom: 10px; }
+.cf-success h4 { font-family: var(--font-display); font-weight: 800; font-size: 19px; color: var(--white); margin-bottom: 8px; }
+.cf-success p { font-size: 14px; color: var(--text-dim); }
+
+/* ============================================================
+   MODAL
+   ============================================================ */
+.modal-overlay {
+  display: none; position: fixed; inset: 0; z-index: 9999;
+  background: rgba(15,23,42,.6); backdrop-filter: blur(8px);
+  align-items: center; justify-content: center;
+}
+.modal-overlay.open { display: flex; }
+.modal-box {
+  background: var(--pure-white); border: 1px solid var(--line);
+  border-radius: 18px; padding: 40px; max-width: 480px; width: 90%; position: relative;
+  box-shadow: 0 32px 80px rgba(0,0,0,.15);
+}
+.modal-close {
+  position: absolute; top: 14px; right: 18px; font-size: 20px;
+  color: var(--text-dim2); cursor: pointer; background: none; border: none; line-height: 1;
+}
+.modal-close:hover { color: var(--bone); }
+.modal-title { font-family: var(--font-display); font-weight: 800; font-size: 22px; color: var(--bone); margin-bottom: 6px; }
+.modal-sub { font-size: 13px; color: var(--text-dim); margin-bottom: 26px; }
+
+/* ============================================================
+   CTA
+   ============================================================ */
+.cta-sec { background: var(--panel); border-top: 1px solid var(--line); padding: 88px 32px; text-align: center; position: relative; }
+.cta-sec::before {
+  content: ''; position: absolute; inset: 0;
+  background: radial-gradient(ellipse 60% 70% at 50% 50%, rgba(65,134,243,.05) 0%, transparent 65%);
+}
+.cta-sec h2 {
+  font-family: var(--font-display); font-weight: 800; font-size: clamp(28px,3.5vw,46px);
+  letter-spacing: -1px; color: var(--bone); max-width: 660px; margin: 0 auto 14px; line-height: 1.12; position: relative;
+}
+.cta-sec h2 em { font-style: normal; color: var(--secondary); }
+.cta-sec p { font-size: 15px; color: var(--text-dim); max-width: 420px; margin: 0 auto 36px; position: relative; }
+.cta-btns { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; position: relative; margin-bottom: 24px; }
+.cta-note { margin-top: 24px; font-size: 13px; color: var(--text-dim); position: relative; letter-spacing: 0.3px; }
+
+/* ============================================================
+   FOOTER
+   ============================================================ */
+footer { background: var(--pure-white); border-top: 1px solid var(--line); padding: 48px 32px 28px; }
+.fg { max-width: var(--container); margin: 0 auto 36px; display: grid; grid-template-columns: 1.8fr 1fr 1fr 1fr; gap: 36px; }
+.fb-tag { font-size: 13px; line-height: 1.6; color: var(--text-dim); max-width: 260px; margin-top: 12px; }
+.fc-col h4 { font-family: var(--font-display); font-weight: 700; font-size: 12px; color: var(--bone); letter-spacing: .5px; text-transform: uppercase; margin-bottom: 14px; }
+.fc-col a { display: block; font-size: 13.5px; color: var(--text-dim); text-decoration: none; margin-bottom: 9px; }
+.fc-col a:hover { color: var(--jade); }
+.fb {
+  max-width: var(--container); margin: 0 auto; display: flex; align-items: center; justify-content: space-between;
+  border-top: 1px solid var(--line); padding-top: 22px; font-size: 12.5px; color: var(--text-dim2);
+}
+
+@media (max-width: 860px) {
+  .fg { grid-template-columns: 1fr 1fr; gap: 26px; }
+  footer { padding: 36px 20px 20px; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="logo">
+    <img src="/growlity-logo.png" alt="Growlity.ai" style="height: 32px; width: auto;" />
+  </a>
+  <div class="nav-links">
+    <a href="#features">Features</a>
+    <a href="#how-it-works">How It Works</a>
+    <a href="#pricing">Pricing</a>
+    <a href="#contact">Contact Us</a>
+  </div>
+  <div class="nav-end">
+    <a href="#" class="n-signin">Sign in</a>
+    <a href="#contact" class="btn btn-secondary">Book a Demo</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-badge">AI-Native ESG Intelligence Platform</div>
+
+  <h1>
+    Measure your impact.<br>
+    <span class="hl">Report with confidence.</span><br>
+    Grow sustainably.
+  </h1>
+
+  <p class="hero-sub">
+    Growlity.ai brings GHG calculations, ESG scoring, BRSR &amp; GRI compliance, and intelligent dashboards together — powered by AI that understands sustainability.
+  </p>
+
+  <div class="hero-btns">
+    <a href="#" class="btn btn-primary">Start Free Trial →</a>
+    <a href="#" class="btn btn-secondary">Watch 3-min Demo</a>
+  </div>
+
+  <div class="hero-trust">
+    <span>No credit card required</span>
+    <span>Setup in under 2 hours</span>
+    <span>SOC 2 Type II certified</span>
+    <span>SEBI &amp; GRI compliant</span>
+  </div>
+
+  <!-- Product preview -->
+  <div class="screen-wrap">
+    <div class="browser">
+      <div class="browser-bar">
+        <div class="bt bt-r"></div><div class="bt bt-y"></div><div class="bt bt-g"></div>
+        <div class="b-url">app.growlity.ai / overview</div>
+        <div class="ai-badge">AI Report Ready</div>
+      </div>
+      <div class="dash">
+
+        <div class="db-side">
+          <div class="db-brand">Growlity<em style="color:rgba(255,255,255,.4)">.ai</em></div>
+          <div class="nav-i on">⬡ Overview</div>
+          <div class="nav-i">🌿 GHG Calculator</div>
+          <div class="nav-i">📊 ESG Data Hub</div>
+          <div class="nav-i">🎯 ESG Score</div>
+          <div class="db-sep"></div>
+          <div class="nav-i">📋 BRSR Mapping</div>
+          <div class="nav-i">🌐 GRI Framework</div>
+          <div class="nav-i">📈 Dashboards</div>
+          <div class="db-sep"></div>
+          <div class="nav-i">🤖 AI Assistant</div>
+          <div class="nav-i">📄 Reports</div>
+        </div>
+
+        <div class="db-top">
+          <h3>ESG Performance Overview</h3>
+          <div style="display:flex;align-items:center;gap:14px;">
+            <div class="db-pills">
+              <div class="dp on">FY 2025</div>
+              <div class="dp">Q4</div>
+              <div class="dp">Monthly</div>
+            </div>
+            <div style="font-size:11px;color:rgba(255,255,255,.3);">Updated 2 min ago</div>
+          </div>
+        </div>
+
+        <div class="db-main">
+          <div class="card kpi">
+            <div class="kpi-lbl">Scope 1+2 Emissions</div>
+            <div class="kpi-val">1,248<span class="u">tCO₂e</span></div>
+            <div class="kpi-d">↓ 18.4% vs last year</div>
+          </div>
+          <div class="card kpi">
+            <div class="kpi-lbl">ESG Score</div>
+            <div class="kpi-val">82<span class="u">/100</span></div>
+            <div class="kpi-d">↑ 12 pts this quarter</div>
+          </div>
+          <div class="card kpi">
+            <div class="kpi-lbl">BRSR Completion</div>
+            <div class="kpi-val">94<span class="u">%</span></div>
+            <div class="kpi-d">6 fields pending AI fill</div>
+          </div>
+          <div class="card kpi">
+            <div class="kpi-lbl">GRI Disclosures</div>
+            <div class="kpi-val">47<span class="u">/ 50</span></div>
+            <div class="kpi-d">3 auto-generating</div>
+          </div>
+
+          <div class="card chart-wide">
+            <div class="ct-title">GHG Emissions Trend — Scope 1, 2 &amp; 3</div>
+            <div class="bars">
+              <div class="bar-c"><div class="bar-f" style="height:68px;opacity:.35;"></div></div>
+              <div class="bar-c"><div class="bar-f" style="height:58px;opacity:.42;"></div></div>
+              <div class="bar-c"><div class="bar-f" style="height:64px;opacity:.48;"></div></div>
+              <div class="bar-c"><div class="bar-f" style="height:52px;opacity:.55;"></div></div>
+              <div class="bar-c"><div class="bar-f" style="height:44px;opacity:.62;"></div></div>
+              <div class="bar-c"><div class="bar-f" style="height:38px;opacity:.72;"></div></div>
+              <div class="bar-c"><div class="bar-f" style="height:48px;opacity:.6;"></div></div>
+              <div class="bar-c"><div class="bar-f" style="height:34px;opacity:.82;"></div></div>
+              <div class="bar-c"><div class="bar-f" style="height:28px;opacity:.9;"></div></div>
+              <div class="bar-c"><div class="bar-f" style="height:22px;"></div></div>
+            </div>
+          </div>
+
+          <div class="card ring-card">
+            <div class="ring-wrap">
+              <svg viewBox="0 0 72 72" width="68" height="68">
+                <circle cx="36" cy="36" r="28" fill="none" stroke="rgba(30,224,127,.1)" stroke-width="5.5"/>
+                <circle cx="36" cy="36" r="28" fill="none" stroke="#1EE07F" stroke-width="5.5"
+                  stroke-dasharray="175.9" stroke-dashoffset="31" stroke-linecap="round"/>
+              </svg>
+              <div class="ring-center"><div class="ring-num"><span class="stat-num" data-target="86">0</span></div><div class="ring-sub">ESG</div></div>
+            </div>
+            <div class="ring-lbl">Top 11%<br>Industry Peer</div>
+          </div>
+
+          <div class="card fw-card">
+            <div class="fw-title">Active Frameworks</div>
+            <span class="fw-badge">BRSR Core</span>
+            <span class="fw-badge">GRI 2021</span>
+            <span class="fw-badge">TCFD</span>
+            <span class="fw-badge">SASB</span>
+            <span class="fw-badge">CDP</span>
+            <span class="fw-badge">CSRD</span>
+            <div style="margin-top:10px;font-size:10px;color:rgba(255,255,255,.3);">AI mapping active for all frameworks</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- LOGOS -->
+<div class="logos-band" data-aos="fade-up">
+  <div class="logos-lbl">Trusted by sustainability teams at</div>
+  <div class="logos-row">
+    <div class="l-name">TATA Group</div>
+    <div class="l-name">Mahindra</div>
+    <div class="l-name">Infosys</div>
+    <div class="l-name">Reliance</div>
+    <div class="l-name">HUL</div>
+    <div class="l-name">Adani Ports</div>
+    <div class="l-name">ITC Limited</div>
+    <div class="l-name">Wipro</div>
+  </div>
+</div>
+
+<!-- FEATURES -->
+<section class="section" id="features">
+  <div class="con">
+    <p class="eyebrow">Everything you need</p>
+    <h2 class="section-title">Built for every part of your ESG journey</h2>
+    <p class="section-sub">From raw emission data to investor-grade reports — Growlity.ai handles the complexity so your team handles the strategy.</p>
+
+    <div class="feat-grid" data-aos="fade-up" data-aos-delay="100">
+      <div class="card fc">
+        <div class="fi">🌿</div>
+        <div class="ft">GHG Emission Calculations</div>
+        <p class="fd">Automated Scope 1, 2 &amp; 3 calculations with 500,000+ emission factors across energy, transport, supply chain and manufacturing. IPCC-aligned methodology built in.</p>
+        <span class="fc-tag">Scope 1 · 2 · 3</span>
+      </div>
+      <div class="card fc">
+        <div class="fi">🗄️</div>
+        <div class="ft">ESG Data Management</div>
+        <p class="fd">Centralise all your Environmental, Social and Governance data — from energy meters to HR records. One source of truth with full audit trail, no spreadsheets.</p>
+        <span class="fc-tag">200+ integrations</span>
+      </div>
+      <div class="card fc">
+        <div class="fi">🤖</div>
+        <div class="ft">AI Assistant</div>
+        <p class="fd">Ask questions in plain language. Get instant answers on emission calculations, framework gaps, disclosure drafts and remediation steps — all explained clearly.</p>
+        <span class="fc-tag">Always on · Instant</span>
+      </div>
+      <div class="card fc">
+        <div class="fi">🎯</div>
+        <div class="ft">ESG Score Calculation</div>
+        <p class="fd">Dynamic ESG score computed from your actual data across E, S and G pillars. Track trajectory over time, benchmark against sector peers, present to investors.</p>
+        <span class="fc-tag">Real-time Score</span>
+      </div>
+      <div class="card fc">
+        <div class="fi">📋</div>
+        <div class="ft">BRSR &amp; GRI Framework Mapping</div>
+        <p class="fd">Your data is automatically mapped to SEBI BRSR Core, GRI 2021, TCFD, SASB and CDP. AI flags disclosure gaps and pre-populates responses for review.</p>
+        <span class="fc-tag">BRSR · GRI · TCFD · SASB</span>
+      </div>
+      <div class="card fc">
+        <div class="fi">📈</div>
+        <div class="ft">Interactive Dashboards</div>
+        <p class="fd">Live drag-and-drop dashboards built for every stakeholder — boards, investors, regulators and operations teams. Custom KPIs, drill-downs and export-ready.</p>
+        <span class="fc-tag">Real-time · Export-ready</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="section section--light center" id="how-it-works">
+  <div class="con">
+    <p class="eyebrow">How it works</p>
+    <h2 class="section-title">From raw data to board-ready reports in 3 steps</h2>
+    <p class="section-sub">No 14-week consulting projects. No manual mapping. Just connect, calculate, and report.</p>
+
+    <div class="steps">
+      <div class="step">
+        <div class="step-n">1</div>
+        <div class="step-t">Connect your data sources</div>
+        <p class="step-d">Plug in ERP, energy meters, HR, finance and supply chain systems via 200+ native integrations. Our AI normalises and validates everything automatically.</p>
+      </div>
+      <div class="step">
+        <div class="step-n">2</div>
+        <div class="step-t">AI calculates &amp; maps frameworks</div>
+        <p class="step-d">Growlity calculates your GHG footprint, builds your ESG score, maps data to BRSR, GRI and TCFD, flags gaps and drafts disclosures in minutes — not months.</p>
+      </div>
+      <div class="step">
+        <div class="step-n">3</div>
+        <div class="step-t">Report, act &amp; grow</div>
+        <p class="step-d">Publish verified reports for regulators and investors, share live dashboards with boards, and use AI-powered recommendations to hit your Net Zero targets faster.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SPLIT 1 — GHG -->
+<section class="section section--panel">
+  <div class="con">
+    <div class="split" data-aos="fade-up">
+      <div>
+        <p class="eyebrow">GHG Calculations</p>
+        <h2 class="section-title">Every tonne of CO₂ — calculated, explained and audited</h2>
+        <ul class="tick-list">
+          <li>Scope 1 direct emissions from fuel combustion, industrial processes and refrigerants</li>
+          <li>Scope 2 from purchased electricity, steam and heating — location &amp; market-based</li>
+          <li>Scope 3 across all 15 categories including supply chain, business travel and product use</li>
+          <li>Full methodology transparency — every factor sourced and cited for auditors</li>
+        </ul>
+        <div style="margin-top:26px;">
+          <a href="#" class="btn btn-primary">Explore GHG Module →</a>
+        </div>
+      </div>
+      <div class="split-vis">
+        <div class="mv">
+          <div class="mv-eyebrow">Live GHG Calculator</div>
+          <div class="mv-row">
+            <div class="mv-pill"><div class="v">842</div><div class="k">Scope 1 tCO₂e</div></div>
+            <div class="mv-pill"><div class="v">290</div><div class="k">Scope 2 tCO₂e</div></div>
+          </div>
+          <div class="mv-row">
+            <div class="mv-pill"><div class="v">4,820</div><div class="k">Scope 3 tCO₂e</div></div>
+            <div class="mv-pill"><div class="v">↓22%</div><div class="k">YoY Reduction</div></div>
+          </div>
+          <div class="mini-bars">
+            <div class="mb" style="height:35%;opacity:.3;"></div>
+            <div class="mb" style="height:52%;opacity:.4;"></div>
+            <div class="mb" style="height:44%;opacity:.45;"></div>
+            <div class="mb" style="height:68%;opacity:.55;"></div>
+            <div class="mb" style="height:58%;opacity:.6;"></div>
+            <div class="mb" style="height:80%;opacity:.75;"></div>
+            <div class="mb" style="height:72%;opacity:.7;"></div>
+            <div class="mb" style="height:90%;"></div>
+          </div>
+          <div class="tag-row">
+            <span class="tag-chip">IPCC AR6 Factors</span>
+            <span class="tag-chip">GHG Protocol</span>
+            <span class="tag-chip">ISO 14064</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SPLIT 2 — Reports -->
+<section class="section section--light">
+  <div class="con">
+    <div class="split flip" data-aos="fade-up">
+      <div class="split-vis">
+        <div class="mv-b">
+          <div class="mv-eyebrow">Report Generation Centre</div>
+          <div class="ri">
+            <div><div class="rn">BRSR Core Report</div><div class="rs">SEBI Mandated · FY 2025 · 48 disclosures</div></div>
+            <span class="rbadge rb-g">Published</span>
+          </div>
+          <div class="ri">
+            <div><div class="rn">GRI Standards Report</div><div class="rs">GRI 2021 Universal · 47 of 50 complete</div></div>
+            <span class="rbadge rb-g">Published</span>
+          </div>
+          <div class="ri">
+            <div><div class="rn">GHG Inventory Report</div><div class="rs">Scope 1 + 2 + 3 · ISO 14064 verified</div></div>
+            <span class="rbadge rb-progress">In Review</span>
+          </div>
+          <div class="ri">
+            <div><div class="rn">ESG Score Report</div><div class="rs">E · S · G pillar breakdown · Investor-ready</div></div>
+            <span class="rbadge rb-progress">AI Drafting</span>
+          </div>
+          <div class="ri">
+            <div><div class="rn">TCFD Climate Disclosure</div><div class="rs">Physical &amp; transition risk · Scenario analysis</div></div>
+            <span class="rbadge rb-progress">AI Drafting</span>
+          </div>
+        </div>
+      </div>
+      <div>
+        <p class="eyebrow">Multi-Framework Reports</p>
+        <h2 class="section-title">One dataset. Every report. Zero duplication.</h2>
+        <ul class="tick-list">
+          <li>BRSR, GRI, GHG Inventory, ESG Score and TCFD reports from a single verified dataset</li>
+          <li>AI pre-populates disclosures and highlights gaps with suggested language</li>
+          <li>Full data lineage — every number in your report is traceable to its source</li>
+          <li>Download as PDF, Excel or share a live auditor-facing link</li>
+        </ul>
+        <div style="margin-top:26px;">
+          <a href="#" class="btn btn-primary">See All Report Types</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<div class="stats-wrap">
+  <div class="stats-grid" data-aos="fade-up">
+    <div class="si"><div class="si-n"><span class="stat-num" data-target="500">0</span>+</div><div class="si-l">Enterprises across<br>30+ industries</div></div>
+    <div class="si"><div class="si-n"><span class="stat-num" data-target="12">0</span>×</div><div class="si-l">Faster reporting vs.<br>manual processes</div></div>
+    <div class="si"><div class="si-n"><span class="stat-num" data-target="2.4">0</span>M</div><div class="si-l">Tonnes CO₂e tracked<br>and reduced annually</div></div>
+    <div class="si"><div class="si-n"><span class="stat-num" data-target="99.9">0</span>%</div><div class="si-l">Uptime · SOC 2 Type II<br>enterprise certified</div></div>
+  </div>
+</div>
+
+<!-- TESTIMONIALS -->
+<section class="section center">
+  <div class="con">
+    <p class="eyebrow">What leaders say</p>
+    <h2 class="section-title" style="margin-bottom:40px;">ESG teams who switched, never looked back</h2>
+
+    <div class="tg" data-aos="fade-up">
+      <div class="card tc">
+        <div class="t-stars">★★★★★</div>
+        <p class="t-q">"Growlity.ai cut our BRSR reporting time from 14 weeks to 6 days. The AI maps our data to every required disclosure automatically. Our auditors were impressed by the data lineage."</p>
+        <div class="t-a">
+          <div class="t-av">PS</div>
+          <div><div class="t-name">Priya Sharma</div><div class="t-role">Chief Sustainability Officer · Mahindra Group</div></div>
+        </div>
+      </div>
+      <div class="card tc">
+        <div class="t-stars">★★★★★</div>
+        <p class="t-q">"The GHG calculator handles our entire Scope 3 supply chain — 600 vendors — automatically. What used to take a consultant 3 months now runs in the background and updates live."</p>
+        <div class="t-a">
+          <div class="t-av">RK</div>
+          <div><div class="t-name">Rohit Kapoor</div><div class="t-role">Head of ESG · Tata Consumer Products</div></div>
+        </div>
+      </div>
+      <div class="card tc">
+        <div class="t-stars">★★★★★</div>
+        <p class="t-q">"Our ESG Score jumped from 61 to 84 in one fiscal year using Growlity's AI recommendations. Two institutional investors cited that score improvement in their decision to increase their stake."</p>
+        <div class="t-a">
+          <div class="t-av">AM</div>
+          <div><div class="t-name">Ananya Menon</div><div class="t-role">VP Finance &amp; ESG · Infosys BPM</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section class="section center" id="pricing">
+  <div class="con">
+    <p class="eyebrow">Plans &amp; Pricing</p>
+    <h2 class="section-title">Choose the plan that fits your journey</h2>
+    <p class="section-sub">From compliance essentials to deep sustainability intelligence — scale as you grow.</p>
+  </div>
+
+  <div class="pricing-grid" data-aos="fade-up">
+    <div class="card pc">
+      <span class="pc-badge">Basic · 3 Months</span>
+      <div class="pc-name">Basic</div>
+      <p class="pc-ideal">Ideal for SMEs starting their sustainability journey</p>
+      <div class="pc-divider"></div>
+      <ul class="pc-features">
+        <li><span class="chk">✓</span> Up to 3 business sites and users</li>
+        <li><span class="chk">✓</span> Scope 1 &amp; 2 emissions calculations<span class="note">Ideal for EcoVadis, CDP, DJSI, BRSR</span></li>
+        <li><span class="chk">✓</span> All-category Scope 3 emissions calculations (DEFRA)</li>
+        <li><span class="chk">✓</span> Comprehensive GHG reports</li>
+        <li><span class="chk">✓</span> ESG score measurement</li>
+        <li class="off"><span class="chk na">✗</span> Energy analytics</li>
+        <li class="off"><span class="chk na">✗</span> Materiality assessment</li>
+        <li class="off"><span class="chk na">✗</span> AI assistant</li>
+        <li class="off"><span class="chk na">✗</span> Interactive trends dashboard</li>
+      </ul>
+      <div class="pc-purpose">
+        <div class="pc-purpose-label">Purpose</div>
+        <p>Get compliant with essential sustainability frameworks. Simplify data management with customisable interfaces.</p>
+      </div>
+      <a href="#contact" class="btn pc-cta outline">Get Started with Basic</a>
+    </div>
+
+    <div class="card pc featured">
+      <span class="pc-badge">Pro · 1 Year Paid</span>
+      <div class="pc-name">Pro</div>
+      <p class="pc-ideal">Designed for growing businesses expanding their sustainability goals</p>
+      <div class="pc-divider"></div>
+      <div class="pc-inherit">✦ Everything in Basic, plus:</div>
+      <ul class="pc-features">
+        <li><span class="chk">✓</span> Extends to 5 business sites and users</li>
+        <li><span class="chk">✓</span> Unified ESG data measurement (E to ESG)</li>
+        <li><span class="chk">✓</span> Advanced Scope 3 emissions calculations<span class="note">Both DEFRA &amp; GHG Protocol</span></li>
+        <li><span class="chk">✓</span> Interactive trends dashboard</li>
+        <li><span class="chk">✓</span> Access to AI Assistant</li>
+        <li><span class="chk">✓</span> Materiality assessment</li>
+        <li><span class="chk">✓</span> GHG, ESG report &amp; materiality reports</li>
+        <li><span class="chk">✓</span> Energy analytics</li>
+      </ul>
+      <div class="pc-purpose">
+        <div class="pc-purpose-label">Purpose</div>
+        <p>Deep dive into your carbon footprint for targeted reduction strategies. Leverage detailed analytics for informed decision-making.</p>
+      </div>
+      <a href="#contact" class="btn btn-primary pc-cta">Get Started with Pro</a>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="section section--panel center" id="contact">
+  <div class="con">
+    <p class="eyebrow">Get in Touch</p>
+    <h2 class="section-title">Let's start your ESG journey</h2>
+    <p class="section-sub">Fill in your details and our team will reach out within 24 hours to discuss how Growlity.ai can work for your organisation.</p>
+  </div>
+
+  <div class="card contact-wrap" data-aos="fade-up">
+    <form id="contact-form" onsubmit="handleContactSubmit(event)">
+      <div class="cf-row">
+        <label class="cf-label" for="cf-name">Full Name *</label>
+        <input class="cf-input" type="text" id="cf-name" name="name" placeholder="e.g. Priya Sharma" required>
+      </div>
+      <div class="cf-row">
+        <label class="cf-label" for="cf-org">Organisation *</label>
+        <input class="cf-input" type="text" id="cf-org" name="organisation" placeholder="e.g. Mahindra Group" required>
+      </div>
+      <div class="cf-row">
+        <label class="cf-label" for="cf-email">Work Email *</label>
+        <input class="cf-input" type="email" id="cf-email" name="email" placeholder="you@company.com" required>
+      </div>
+      <div class="cf-row">
+        <label class="cf-label" for="cf-phone">Contact Number *</label>
+        <input class="cf-input" type="tel" id="cf-phone" name="phone" placeholder="+91 98765 43210" required>
+      </div>
+      <button type="submit" class="cf-submit">Request a Demo →</button>
+    </form>
+    <div class="cf-success" id="cf-success">
+      <div class="icon">🌿</div>
+      <h4>Thank you! We'll be in touch soon.</h4>
+      <p>Our team will reach out within 24 hours. In the meantime, explore our platform features above.</p>
+    </div>
+  </div>
+</section>
+
+<!-- MODAL (for growlity.com Notify Me trigger) -->
+<div class="modal-overlay" id="notify-modal">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <p class="eyebrow">Stay Updated</p>
+    <div class="modal-title">Get Early Access to Growlity.ai</div>
+    <p class="modal-sub">Be the first to know when new features launch. Enter your details below.</p>
+    <form id="modal-form" onsubmit="handleModalSubmit(event)">
+      <div class="cf-row">
+        <label class="cf-label" for="m-name">Full Name *</label>
+        <input class="cf-input" type="text" id="m-name" placeholder="Your name" required>
+      </div>
+      <div class="cf-row">
+        <label class="cf-label" for="m-org">Organisation *</label>
+        <input class="cf-input" type="text" id="m-org" placeholder="Your company" required>
+      </div>
+      <div class="cf-row">
+        <label class="cf-label" for="m-email">Work Email *</label>
+        <input class="cf-input" type="email" id="m-email" placeholder="you@company.com" required>
+      </div>
+      <div class="cf-row">
+        <label class="cf-label" for="m-phone">Contact Number *</label>
+        <input class="cf-input" type="tel" id="m-phone" placeholder="+91 98765 43210" required>
+      </div>
+      <button type="submit" class="cf-submit">Notify Me →</button>
+    </form>
+    <div class="cf-success" id="modal-success">
+      <div class="icon">✅</div>
+      <h4>You're on the list!</h4>
+      <p>We'll notify you the moment this feature goes live.</p>
+    </div>
+  </div>
+</div>
+
+<!-- CTA -->
+<section class="cta-sec">
+  <h2>Your ESG data exists.<br>Let <em>AI</em> turn it into advantage.</h2>
+  <p>Join 500+ enterprises using Growlity.ai to measure, report and grow — starting today.</p>
+  <div class="cta-btns">
+    <a href="#" class="btn btn-primary">Start Free Trial — No Credit Card</a>
+    <a href="#" class="btn btn-secondary">Schedule a Live Demo</a>
+  </div>
+  <p class="cta-note">14-day free trial · Full platform access · Dedicated onboarding support</p>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="fg">
+    <div>
+      <a href="#" class="logo">
+        <img src="/growlity-logo.png" alt="Growlity.ai" style="height: 32px; width: auto;" />
+      </a>
+      <p class="fb-tag">AI-native ESG growth intelligence — built for enterprises that take sustainability beyond compliance.</p>
+    </div>
+    <div class="fc-col">
+      <h4>Platform</h4>
+      <a href="#">GHG Calculator</a>
+      <a href="#">ESG Data Hub</a>
+      <a href="#">ESG Score</a>
+      <a href="#">AI Assistant</a>
+      <a href="#">Dashboards</a>
+    </div>
+    <div class="fc-col">
+      <h4>Frameworks</h4>
+      <a href="#">BRSR Core</a>
+      <a href="#">GRI 2021</a>
+      <a href="#">TCFD</a>
+      <a href="#">SASB</a>
+      <a href="#">CDP · CSRD</a>
+    </div>
+    <div class="fc-col">
+      <h4>Company</h4>
+      <a href="#">About Us</a>
+      <a href="#">Blog</a>
+      <a href="#">Careers</a>
+      <a href="#">Contact</a>
+      <a href="#">Privacy Policy</a>
+    </div>
+  </div>
+  <div class="fb">
+    <span>© 2026 Growlity.ai · All rights reserved</span>
+    <span>Made with 🌿 for a net-zero future</span>
+  </div>
+</footer>
+
+<!-- AOS JS -->
+<script is:inline src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+
+<script is:inline>
+  // Initialize AOS Animation Library
+  // @ts-ignore
+  if (window.AOS) {
+      // @ts-ignore
+      window.AOS.init({
+          duration: 800,   // The animation takes 800ms (0.8 seconds) to complete
+          once: true,      // The animation only happens once when scrolling down
+          offset: 50,      // The animation triggers when the element is 50px away from the viewport
+      });
+  }
+
+  // Number Counter Logic
+  const stats = document.querySelectorAll('.stat-num');
+  if (stats.length > 0) {
+      const statsObserver = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+              if (entry.isIntersecting) {
+                  // @ts-ignore
+                  const el = entry.target;
+                  const targetAttr = el.getAttribute('data-target');
+                  if (targetAttr) {
+                      const target = parseFloat(targetAttr);
+                      let count = 0;
+                      const duration = 2000;
+                      const increment = target / (duration / 16);
+                      
+                      const updateCount = () => {
+                          count += increment;
+                          if (count < target) {
+                              el.innerHTML = target % 1 === 0 ? Math.ceil(count).toString() : count.toFixed(1);
+                              requestAnimationFrame(updateCount);
+                          } else {
+                              el.innerHTML = target.toString();
+                          }
+                      };
+                      updateCount();
+                  }
+                  statsObserver.unobserve(el);
+              }
+          });
+      }, { threshold: 0.5 });
+      stats.forEach(stat => statsObserver.observe(stat));
+  }
+
+  function openModal() {
+    document.getElementById('notify-modal').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeModal() {
+    document.getElementById('notify-modal').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  document.getElementById('notify-modal').addEventListener('click', function (e) {
+    if (e.target === this) closeModal();
+  });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') closeModal();
+  });
+
+  function handleModalSubmit(e) {
+    e.preventDefault();
+    document.getElementById('modal-form').style.display = 'none';
+    document.getElementById('modal-success').style.display = 'block';
+  }
+
+  // Cross-origin trigger from growlity.com
+  window.addEventListener('message', function (event) {
+    // In production, restrict origin: if (event.origin !== 'https://growlity.com') return;
+    if (event.data === 'open-contact' || event.data === 'notify-me') openModal();
+    if (event.data === 'open-pricing') document.getElementById('pricing').scrollIntoView({ behavior: 'smooth' });
+  });
+
+  if (window.location.hash === '#notify') {
+    window.addEventListener('load', openModal);
+  }
+</script>
+
+</body>
+</html>

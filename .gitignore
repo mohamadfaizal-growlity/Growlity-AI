@@ -1,0 +1,5 @@
+node_modules/
+.astro/
+dist/
+.DS_Store
+growlity-landing-clean.backup.html
