@@ -1,13 +1,7 @@
 import type { APIRoute } from 'astro';
 import { PrismaClient } from '@prisma/client';
 
-const prisma = new PrismaClient({
-  datasources: {
-    db: {
-      url: import.meta.env.DATABASE_URL
-    }
-  }
-});
+const prisma = new PrismaClient();
 
 export const POST: APIRoute = async ({ request }) => {
   try {
