@@ -981,10 +981,63 @@ footer { background: var(--pure-white); border-top: 1px solid var(--line); paddi
     if (e.key === 'Escape') closeModal();
   });
 
-  function handleModalSubmit(e) {
+  async function handleContactSubmit(e) {
     e.preventDefault();
+    const form = e.target;
+    const data = {
+      name: form.name.value,
+      organization: form.organization.value,
+      email: form.email.value,
+      phone: form.phone.value
+    };
+    
+    // Fallback UI update
+    document.getElementById('contact-form').style.display = 'none';
+    document.getElementById('cf-success').style.display = 'block';
+
+    try {
+      await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: data.name,
+          company: data.organization,
+          email: data.email,
+          role: data.phone // storing phone in role for now since db doesn't have phone
+        })
+      });
+    } catch (err) {
+      console.error(err);
+    }
+  }
+
+  async function handleModalSubmit(e) {
+    e.preventDefault();
+    const form = e.target;
+    const data = {
+      name: form.querySelector('#m-name').value,
+      organization: form.querySelector('#m-org').value,
+      email: form.querySelector('#m-email').value,
+      phone: form.querySelector('#m-phone').value
+    };
+
     document.getElementById('modal-form').style.display = 'none';
     document.getElementById('modal-success').style.display = 'block';
+
+    try {
+      await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: data.name,
+          company: data.organization,
+          email: data.email,
+          role: data.phone
+        })
+      });
+    } catch (err) {
+      console.error(err);
+    }
   }
 
   // Cross-origin trigger from growlity.com

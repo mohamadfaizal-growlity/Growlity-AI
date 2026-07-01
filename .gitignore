@@ -3,3 +3,5 @@ node_modules/
 dist/
 .DS_Store
 growlity-landing-clean.backup.html
+
+/src/generated/prisma
