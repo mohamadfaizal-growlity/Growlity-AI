@@ -169,8 +169,8 @@ h1 .hl { color: var(--secondary); }
 .hero-trust span::before { content: '✓'; color: var(--jade); font-size: 12px; }
 
 @media (max-width: 860px) {
-  .hero-btns { flex-direction: column; width: 100%; }
-  .btn { width: 100%; }
+  .hero-btns { flex-direction: column; align-items: center; width: 100%; }
+  .btn { width: 100%; max-width: 320px; }
 }
 
 .screen-wrap { 
@@ -584,7 +584,7 @@ footer { background: var(--pure-white); border-top: 1px solid var(--line); paddi
   </p>
 
   <div class="hero-btns">
-    <a href="#contact" class="btn btn-secondary" style="width: 320px; font-size: 16px; padding: 16px;">Book a Demo</a>
+    <a href="#contact" class="btn btn-secondary" style="font-size: 16px; padding: 16px;">Book a Demo</a>
   </div>
 
   <!-- Product preview -->
