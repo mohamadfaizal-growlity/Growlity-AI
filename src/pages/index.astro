@@ -985,19 +985,41 @@ footer { background: var(--pure-white); border-top: 1px solid var(--line); paddi
     window.addEventListener('load', openModal);
   }
 
-  // Change contact form button text and auto-scroll if coming from growlity.com
-  const isFromGrowlity = document.referrer.includes('growlity.com') || window.location.search.includes('source=growlity') || window.location.href.includes('notify');
+  // AGGRESSIVE AUTO-SCROLL LOGIC
+  const ref = document.referrer.toLowerCase();
+  const url = window.location.href.toLowerCase();
+  
+  // Detect if coming from growlity (but not the vercel app itself) or if URL contains triggers
+  const isFromGrowlity = (ref.includes('growlity') && !ref.includes('vercel.app')) || 
+                         url.includes('source=growlity') || 
+                         url.includes('notify');
   
   if (isFromGrowlity) {
+    // 1. Change Button Text
     const contactBtn = document.querySelector('#contact-form .cf-submit');
     if (contactBtn) {
       contactBtn.innerHTML = 'Notify Me &rarr;';
     }
     
-    // Auto-scroll to the contact section natively
+    // 2. Force Scroll (Aggressive fallback strategy)
+    const forceScroll = () => {
+      const contactSection = document.getElementById('contact');
+      if (contactSection) {
+        contactSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    };
+    
+    // Execute immediately and natively
     if (window.location.hash !== '#contact') {
       window.location.hash = 'contact';
     }
+    forceScroll();
+    
+    // Execute on load and at intervals to beat any rendering delays
+    window.addEventListener('load', forceScroll);
+    setTimeout(forceScroll, 300);
+    setTimeout(forceScroll, 1000);
+    setTimeout(forceScroll, 2000);
   }
 </script>
 
