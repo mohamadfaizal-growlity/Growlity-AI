@@ -986,22 +986,24 @@ footer { background: var(--pure-white); border-top: 1px solid var(--line); paddi
   }
 
   // Change contact form button text and auto-scroll if coming from growlity.com
-  window.addEventListener('DOMContentLoaded', () => {
-    if (document.referrer.includes('growlity.com') || window.location.search.includes('source=growlity') || window.location.href.includes('notify')) {
-      const contactBtn = document.querySelector('#contact-form .cf-submit');
-      if (contactBtn) {
-        contactBtn.innerHTML = 'Notify Me &rarr;';
-      }
-      
-      // Auto-scroll to the contact section
+  const isFromGrowlity = document.referrer.includes('growlity.com') || window.location.search.includes('source=growlity') || window.location.href.includes('notify');
+  
+  if (isFromGrowlity) {
+    const contactBtn = document.querySelector('#contact-form .cf-submit');
+    if (contactBtn) {
+      contactBtn.innerHTML = 'Notify Me &rarr;';
+    }
+    
+    // Auto-scroll to the contact section
+    window.addEventListener('load', () => {
       setTimeout(() => {
         const contactSection = document.getElementById('contact');
         if (contactSection) {
-          contactSection.scrollIntoView({ behavior: 'smooth' });
+          contactSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
         }
-      }, 500);
-    }
-  });
+      }, 600);
+    });
+  }
 </script>
 
 </body>
