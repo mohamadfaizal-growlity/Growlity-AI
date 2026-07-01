@@ -994,13 +994,10 @@ footer { background: var(--pure-white); border-top: 1px solid var(--line); paddi
       contactBtn.innerHTML = 'Notify Me &rarr;';
     }
     
-    // Auto-scroll to the contact section (reliable for both prod and local dev)
-    setTimeout(() => {
-      const contactSection = document.getElementById('contact');
-      if (contactSection) {
-        contactSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      }
-    }, 800);
+    // Auto-scroll to the contact section natively
+    if (window.location.hash !== '#contact') {
+      window.location.hash = 'contact';
+    }
   }
 </script>
 
