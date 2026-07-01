@@ -382,7 +382,10 @@ h1 .hl { color: var(--secondary); }
 .rb-g { background: #e0f2fe; color: #0284c7; }
 .rb-progress { background: #fef3c7; color: #d97706; }
 
-@media (max-width: 860px) { .split, .split.flip { grid-template-columns: 1fr; direction: ltr; gap: 28px; } }
+@media (max-width: 860px) { 
+  .split { grid-template-columns: 1fr; gap: 28px; }
+  .split.flip { display: flex; flex-direction: column-reverse; direction: ltr; gap: 28px; }
+}
 
 /* ============================================================
    STATS
