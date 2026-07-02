@@ -1040,8 +1040,10 @@ footer { background: var(--pure-white); border-top: 1px solid var(--line); paddi
         el.textContent = 'Notify me →';
       }
     });
+  }
 
-    // 2. Automatically show popup (once per session)
+  // 2. Automatically show popup (ONLY if specifically requested via ?notify=true)
+  if (window.location.search.includes('notify=true')) {
     const triggerPopup = () => {
       if (!sessionStorage.getItem('popupShown')) {
         setTimeout(() => {
