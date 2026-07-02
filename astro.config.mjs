@@ -6,6 +6,8 @@ import vercel from '@astrojs/vercel';
 
 // https://astro.build/config
 export default defineConfig({
+  site: "https://growlity.com",
+  base: "/esg-intelligence",
   output: 'server',
   adapter: vercel(),
   integrations: [react()],

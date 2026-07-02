@@ -570,7 +570,7 @@ footer { background: var(--pure-white); border-top: 1px solid var(--line); paddi
   </a>
 
   <div class="nav-end">
-    <a href="#contact" class="btn btn-secondary">Book a Demo</a>
+    <a href="#" onclick="event.preventDefault(); openModal();" class="btn btn-secondary">Book a Demo</a>
   </div>
 </nav>
 
@@ -588,7 +588,7 @@ footer { background: var(--pure-white); border-top: 1px solid var(--line); paddi
   </p>
 
   <div class="hero-btns">
-    <a href="#contact" class="btn btn-secondary" style="font-size: 16px; padding: 16px;">Book a Demo</a>
+    <a href="#" onclick="event.preventDefault(); openModal();" class="btn btn-secondary" style="font-size: 16px; padding: 16px;">Book a Demo</a>
   </div>
 
   <!-- Product preview -->
@@ -775,7 +775,7 @@ footer { background: var(--pure-white); border-top: 1px solid var(--line); paddi
         <div class="pc-purpose-label">Purpose</div>
         <p>Get compliant with essential sustainability frameworks. Simplify data management with customizable interfaces.</p>
       </div>
-      <a href="#contact" class="btn btn-primary pc-cta">Get Started with Basic</a>
+      <a href="#" onclick="event.preventDefault(); openModal();" class="btn btn-primary pc-cta">Get Started with Basic</a>
     </div>
 
     <div class="card pc featured">
@@ -797,54 +797,18 @@ footer { background: var(--pure-white); border-top: 1px solid var(--line); paddi
         <div class="pc-purpose-label">Purpose</div>
         <p>Deep dive into your carbon footprint for targeted reduction strategies. Leverage detailed analytics for informed decision-making.</p>
       </div>
-      <a href="#contact" class="btn btn-primary pc-cta">Get Started with Pro</a>
+      <a href="#" onclick="event.preventDefault(); openModal();" class="btn btn-primary pc-cta">Get Started with Pro</a>
     </div>
   </div>
 </section>
 
-<!-- CONTACT -->
-<section class="section section--panel center" id="contact">
-  <div class="con">
-    <p class="eyebrow">Get in Touch</p>
-    <h2 class="section-title">Let's start your ESG journey</h2>
-    <p class="section-sub">Fill in your details and our team will reach out within 24 hours to discuss how ESG intelligence platform can work for your organization.</p>
-  </div>
-
-  <div class="card contact-wrap" data-aos="fade-up">
-    <form id="contact-form" onsubmit="handleContactSubmit(event)">
-      <div class="cf-row">
-        <label class="cf-label" for="cf-name">Full Name *</label>
-        <input class="cf-input" type="text" id="cf-name" name="name" placeholder="e.g. Priya Sharma" minlength="3" required>
-      </div>
-      <div class="cf-row">
-        <label class="cf-label" for="cf-org">Organization *</label>
-        <input class="cf-input" type="text" id="cf-org" name="organization" placeholder="e.g. Mahindra Group" minlength="1" required>
-      </div>
-      <div class="cf-row">
-        <label class="cf-label" for="cf-email">Work Email *</label>
-        <input class="cf-input" type="email" id="cf-email" name="email" placeholder="you@company.com" pattern="[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}" title="Please enter a valid email address" required>
-      </div>
-      <div class="cf-row">
-        <label class="cf-label" for="cf-phone">Contact Number *</label>
-        <input class="cf-input" type="tel" id="cf-phone" name="phone" placeholder="98765 43210" pattern="[\+0-9\s\-]{10,20}" minlength="10" title="Please enter a valid phone number (minimum 10 digits, numbers, spaces, +, or -)" required>
-      </div>
-      <button type="submit" class="cf-submit">Request a Demo →</button>
-    </form>
-    <div class="cf-success" id="cf-success">
-      <div class="icon">🌿</div>
-      <h4>Thank you! We'll be in touch soon.</h4>
-      <p>Our team will reach out within 24 hours. In the meantime, explore our platform features above.</p>
-    </div>
-  </div>
-</section>
-
-<!-- MODAL (for growlity.com Notify Me trigger) -->
+<!-- MODAL -->
 <div class="modal-overlay" id="notify-modal">
   <div class="modal-box">
     <button class="modal-close" onclick="closeModal()">✕</button>
-    <p class="eyebrow">Stay Updated</p>
-    <div class="modal-title">Get Early Access to ESG intelligence platform</div>
-    <p class="modal-sub">Be the first to know when new features launch. Enter your details below.</p>
+    <p class="eyebrow">Get in Touch</p>
+    <div class="modal-title">Let's start your ESG journey</div>
+    <p class="modal-sub">Fill in your details and our team will reach out within 24 hours.</p>
     <form id="modal-form" onsubmit="handleModalSubmit(event)">
       <div class="cf-row">
         <label class="cf-label" for="m-name">Full Name *</label>
@@ -862,7 +826,7 @@ footer { background: var(--pure-white); border-top: 1px solid var(--line); paddi
         <label class="cf-label" for="m-phone">Contact Number *</label>
         <input class="cf-input" type="tel" id="m-phone" placeholder="98765 43210" pattern="[\+0-9\s\-]{10,20}" minlength="10" title="Please enter a valid phone number (minimum 10 digits, numbers, spaces, +, or -)" required>
       </div>
-      <button type="submit" class="cf-submit">Notify Me →</button>
+      <button type="submit" class="cf-submit">Request a Demo →</button>
     </form>
     <div class="cf-success" id="modal-success">
       <div class="icon">✅</div>
@@ -877,7 +841,7 @@ footer { background: var(--pure-white); border-top: 1px solid var(--line); paddi
   <h2>Your ESG data exists.<br>Let <em>AI</em> turn it into advantage.</h2>
   <p>Join 500+ enterprises using ESG intelligence platform to measure, report and grow — starting today.</p>
   <div class="cta-btns">
-    <a href="#contact" class="btn btn-secondary">Schedule a Live Demo</a>
+    <a href="#" onclick="event.preventDefault(); openModal();" class="btn btn-secondary">Schedule a Live Demo</a>
   </div>
   <p class="cta-note">14-day free trial · Full platform access · Dedicated onboarding support</p>
 </section>
@@ -981,36 +945,6 @@ footer { background: var(--pure-white); border-top: 1px solid var(--line); paddi
     if (e.key === 'Escape') closeModal();
   });
 
-  async function handleContactSubmit(e) {
-    e.preventDefault();
-    const form = e.target;
-    const data = {
-      name: form.name.value,
-      organization: form.organization.value,
-      email: form.email.value,
-      phone: form.phone.value
-    };
-    
-    // Fallback UI update
-    document.getElementById('contact-form').style.display = 'none';
-    document.getElementById('cf-success').style.display = 'block';
-
-    try {
-      await fetch('/api/contact', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          name: data.name,
-          company: data.organization,
-          email: data.email,
-          role: data.phone // storing phone in role for now since db doesn't have phone
-        })
-      });
-    } catch (err) {
-      console.error(err);
-    }
-  }
-
   async function handleModalSubmit(e) {
     e.preventDefault();
     const form = e.target;
@@ -1051,41 +985,27 @@ footer { background: var(--pure-white); border-top: 1px solid var(--line); paddi
     window.addEventListener('load', openModal);
   }
 
-  // AGGRESSIVE AUTO-SCROLL LOGIC
-  const ref = document.referrer.toLowerCase();
-  const url = window.location.href.toLowerCase();
-  
-  // Detect if coming from growlity (but not the vercel app itself) or if URL contains triggers
-  const isFromGrowlity = (ref.includes('growlity') && !ref.includes('vercel.app')) || 
-                         url.includes('source=growlity') || 
-                         url.includes('notify');
-  
-  if (isFromGrowlity) {
-    // 1. Change Button Text
-    const contactBtn = document.querySelector('#contact-form .cf-submit');
-    if (contactBtn) {
-      contactBtn.innerHTML = 'Notify Me &rarr;';
+  // Intercept all links to #contact and open modal instead
+  document.querySelectorAll('a[href="#" onclick="event.preventDefault(); openModal();"]').forEach(link => {
+    link.addEventListener('click', (e) => {
+      e.preventDefault();
+      openModal();
+    });
+  });
+
+  // UNIVERSAL AUTO-OPEN LOGIC (Once per session)
+  window.addEventListener('load', () => {
+    if (!sessionStorage.getItem('popupShown')) {
+      setTimeout(() => {
+        openModal();
+        sessionStorage.setItem('popupShown', 'true');
+      }, 500); // 500ms delay so they see the page first
     }
-    
-    // 2. Force Scroll (Aggressive fallback strategy)
-    const forceScroll = () => {
-      const contactSection = document.getElementById('contact');
-      if (contactSection) {
-        contactSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      }
-    };
-    
-    // Execute immediately and natively
-    if (window.location.hash !== '#contact') {
-      window.location.hash = 'contact';
-    }
-    forceScroll();
-    
-    // Execute on load and at intervals to beat any rendering delays
-    window.addEventListener('load', forceScroll);
-    setTimeout(forceScroll, 300);
-    setTimeout(forceScroll, 1000);
-    setTimeout(forceScroll, 2000);
+  });
+
+  // Keep hash check for direct links
+  if (window.location.hash === '#contact' || window.location.hash === '#notify') {
+    setTimeout(openModal, 100);
   }
 </script>
 
