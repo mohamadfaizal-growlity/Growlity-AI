@@ -999,7 +999,9 @@ footer { background: var(--pure-white); border-top: 1px solid var(--line); paddi
   }
 
   // Behavior for visitors from growlity.com (reverse-proxied or referred)
-  const fromGrowlity = window.location.hostname.includes('growlity.com') || document.referrer.includes('growlity.com');
+  const fromGrowlity = window.location.hostname.includes('growlity.com') || 
+                       document.referrer.includes('growlity.com') ||
+                       window.location.search.includes('test=growlity');
   if (fromGrowlity) {
     // 1. Change 'Book a Demo' buttons to 'Notify me'
     document.querySelectorAll('a, button').forEach(el => {
@@ -1012,14 +1014,20 @@ footer { background: var(--pure-white); border-top: 1px solid var(--line); paddi
     });
 
     // 2. Automatically show popup (once per session)
-    window.addEventListener('load', () => {
+    const triggerPopup = () => {
       if (!sessionStorage.getItem('popupShown')) {
         setTimeout(() => {
           openModal();
           sessionStorage.setItem('popupShown', 'true');
         }, 500); // 500ms delay so they see the page first
       }
-    });
+    };
+
+    if (document.readyState === 'complete') {
+      triggerPopup();
+    } else {
+      window.addEventListener('load', triggerPopup);
+    }
   }
 </script>
 
