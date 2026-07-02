@@ -1039,14 +1039,11 @@ footer { background: var(--pure-white); border-top: 1px solid var(--line); paddi
       }
     });
 
-    // 2. Automatically show popup (once per session)
+    // 2. Automatically show popup
     const triggerPopup = () => {
-      if (!sessionStorage.getItem('popupShown')) {
-        setTimeout(() => {
-          openModal();
-          sessionStorage.setItem('popupShown', 'true');
-        }, 500); // 500ms delay so they see the page first
-      }
+      setTimeout(() => {
+        openModal();
+      }, 500); // 500ms delay so they see the page first
     };
 
     if (document.readyState === 'complete') {
