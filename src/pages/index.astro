@@ -998,11 +998,11 @@ footer { background: var(--pure-white); border-top: 1px solid var(--line); paddi
     setTimeout(openModal, 100);
   }
 
-  // Behavior for visitors from growlity.com (reverse-proxied or referred)
-  const fromGrowlity = window.location.hostname.includes('growlity.com') || 
-                       document.referrer.includes('growlity.com') ||
-                       window.location.search.includes('test=growlity');
-  if (fromGrowlity) {
+  // Behavior for visitors from growlity.com (Wordpress site)
+  const isFromWordpress = (document.referrer.includes('growlity.com') && !document.referrer.includes('/esg-intelligence')) || 
+                          window.location.search.includes('test=growlity');
+                          
+  if (isFromWordpress) {
     // 1. Change 'Book a Demo' buttons to 'Notify me'
     document.querySelectorAll('a, button').forEach(el => {
       const text = el.textContent.trim();
