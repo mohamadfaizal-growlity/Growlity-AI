@@ -864,6 +864,40 @@ footer { background: var(--pure-white); border-top: 1px solid var(--line); paddi
   </div>
 </div>
 
+<!-- NOTIFY MODAL -->
+<div class="modal-overlay" id="notify-only-modal">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeNotifyModal()">✕</button>
+    <p class="eyebrow">Stay Updated</p>
+    <div class="modal-title">Get Early Access to ESG intelligence platform</div>
+    <p class="modal-sub">Be the first to know when new features launch. Enter your details below.</p>
+    <form id="notify-form" onsubmit="handleNotifySubmit(event)">
+      <div class="cf-row">
+        <label class="cf-label" for="n-name">Full Name *</label>
+        <input class="cf-input" type="text" id="n-name" placeholder="Your name" minlength="3" required>
+      </div>
+      <div class="cf-row">
+        <label class="cf-label" for="n-org">Organization *</label>
+        <input class="cf-input" type="text" id="n-org" placeholder="Your company" minlength="1" required>
+      </div>
+      <div class="cf-row">
+        <label class="cf-label" for="n-email">Work Email *</label>
+        <input class="cf-input" type="email" id="n-email" placeholder="you@company.com" pattern="[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}" title="Please enter a valid email address" required>
+      </div>
+      <div class="cf-row">
+        <label class="cf-label" for="n-phone">Contact Number *</label>
+        <input class="cf-input" type="tel" id="n-phone" placeholder="98765 43210" pattern="[\+0-9\s\-]{10,20}" minlength="10" title="Please enter a valid phone number (minimum 10 digits, numbers, spaces, +, or -)" required>
+      </div>
+      <button type="submit" class="cf-submit">Notify me →</button>
+    </form>
+    <div class="cf-success" id="notify-success">
+      <div class="icon">✅</div>
+      <h4>You're on the list!</h4>
+      <p>We'll notify you the moment this feature goes live.</p>
+    </div>
+  </div>
+</div>
+
 <!-- CTA -->
 <section class="cta-sec">
   <h2>Your ESG data exists.<br>Let <em>AI</em> turn it into advantage.</h2>
@@ -969,8 +1003,24 @@ footer { background: var(--pure-white); border-top: 1px solid var(--line); paddi
   document.getElementById('notify-modal').addEventListener('click', function (e) {
     if (e.target === this) closeModal();
   });
+
+  function openNotifyModal() {
+    document.getElementById('notify-only-modal').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeNotifyModal() {
+    document.getElementById('notify-only-modal').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  document.getElementById('notify-only-modal').addEventListener('click', function (e) {
+    if (e.target === this) closeNotifyModal();
+  });
+
   document.addEventListener('keydown', function (e) {
-    if (e.key === 'Escape') closeModal();
+    if (e.key === 'Escape') {
+      closeModal();
+      closeNotifyModal();
+    }
   });
 
   async function handleModalSubmit(e) {
@@ -1002,15 +1052,45 @@ footer { background: var(--pure-white); border-top: 1px solid var(--line); paddi
     }
   }
 
+  async function handleNotifySubmit(e) {
+    e.preventDefault();
+    const form = e.target;
+    const data = {
+      name: form.querySelector('#n-name').value,
+      organization: form.querySelector('#n-org').value,
+      email: form.querySelector('#n-email').value,
+      phone: form.querySelector('#n-phone').value
+    };
+
+    document.getElementById('notify-form').style.display = 'none';
+    document.getElementById('notify-success').style.display = 'block';
+
+    try {
+      await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: data.name,
+          company: data.organization,
+          email: data.email,
+          role: data.phone
+        })
+      });
+    } catch (err) {
+      console.error(err);
+    }
+  }
+
   // Cross-origin trigger from growlity.com
   window.addEventListener('message', function (event) {
     // In production, restrict origin: if (event.origin !== 'https://growlity.com') return;
-    if (event.data === 'open-contact' || event.data === 'notify-me') openModal();
+    if (event.data === 'open-contact') openModal();
+    if (event.data === 'notify-me') openNotifyModal();
     if (event.data === 'open-pricing') document.getElementById('pricing').scrollIntoView({ behavior: 'smooth' });
   });
 
   if (window.location.hash === '#notify') {
-    window.addEventListener('load', openModal);
+    window.addEventListener('load', openNotifyModal);
   }
 
   // Intercept all links to #contact and open modal instead
@@ -1022,8 +1102,11 @@ footer { background: var(--pure-white); border-top: 1px solid var(--line); paddi
   });
 
   // Keep hash check for direct links
-  if (window.location.hash === '#contact' || window.location.hash === '#notify') {
+  if (window.location.hash === '#contact') {
     setTimeout(openModal, 100);
+  }
+  if (window.location.hash === '#notify') {
+    setTimeout(openNotifyModal, 100);
   }
 
   // Behavior for visitors from growlity.com (Wordpress site)
@@ -1032,18 +1115,10 @@ footer { background: var(--pure-white); border-top: 1px solid var(--line); paddi
                           window.location.hash === '#notify';
                           
   if (isFromWordpress) {
-    // 1. Change popup 'Request a Demo' button to 'Notify me'
-    document.querySelectorAll('a, button').forEach(el => {
-      const text = el.textContent.trim();
-      if (text === 'Request a Demo →') {
-        el.textContent = 'Notify me →';
-      }
-    });
-
-    // 2. Automatically show popup
+    // Automatically show popup
     const triggerPopup = () => {
       setTimeout(() => {
-        openModal();
+        openNotifyModal();
       }, 500); // 500ms delay so they see the page first
     };
 
