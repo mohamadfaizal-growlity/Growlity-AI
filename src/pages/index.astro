@@ -570,7 +570,7 @@ footer { background: var(--pure-white); border-top: 1px solid var(--line); paddi
   </a>
 
   <div class="nav-end">
-    <a href="#" onclick="event.preventDefault(); openModal();" class="btn btn-secondary">Book a Demo</a>
+    <a href="#" onclick="event.preventDefault(); openModal();" class="btn btn-secondary">Request Demo</a>
   </div>
 </nav>
 
@@ -588,7 +588,7 @@ footer { background: var(--pure-white); border-top: 1px solid var(--line); paddi
   </p>
 
   <div class="hero-btns">
-    <a href="#" onclick="event.preventDefault(); openModal();" class="btn btn-secondary" style="font-size: 16px; padding: 16px 48px;">Book a Demo</a>
+    <a href="#" onclick="event.preventDefault(); openModal();" class="btn btn-secondary" style="font-size: 16px; padding: 16px 48px;">Request Demo</a>
   </div>
 
   <!-- Product preview -->
@@ -1031,10 +1031,10 @@ footer { background: var(--pure-white); border-top: 1px solid var(--line); paddi
                           window.location.search.includes('test=growlity');
                           
   if (isFromWordpress) {
-    // 1. Change 'Book a Demo' buttons to 'Notify me'
+    // 1. Change 'Request Demo' buttons to 'Notify me'
     document.querySelectorAll('a, button').forEach(el => {
       const text = el.textContent.trim();
-      if (text === 'Book a Demo' || text === 'Schedule a Live Demo') {
+      if (text === 'Request Demo' || text === 'Schedule a Live Demo') {
         el.textContent = 'Notify me';
       } else if (text === 'Request a Demo →') {
         el.textContent = 'Notify me →';
