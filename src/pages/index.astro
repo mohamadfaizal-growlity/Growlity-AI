@@ -822,11 +822,11 @@ footer { background: var(--pure-white); border-top: 1px solid var(--line); paddi
       </div>
       <div class="cf-row">
         <label class="cf-label" for="cf-email">Work Email *</label>
-        <input class="cf-input" type="email" id="cf-email" name="email" placeholder="you@company.com" required>
+        <input class="cf-input" type="email" id="cf-email" name="email" placeholder="you@company.com" pattern="[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}" title="Please enter a valid email address" required>
       </div>
       <div class="cf-row">
         <label class="cf-label" for="cf-phone">Contact Number *</label>
-        <input class="cf-input" type="tel" id="cf-phone" name="phone" placeholder="+91 98765 43210" required>
+        <input class="cf-input" type="tel" id="cf-phone" name="phone" placeholder="+91 98765 43210" pattern="[\+0-9\s\-]{10,20}" minlength="10" title="Please enter a valid phone number (minimum 10 digits, numbers, spaces, +, or -)" required>
       </div>
       <button type="submit" class="cf-submit">Request a Demo →</button>
     </form>
@@ -856,11 +856,11 @@ footer { background: var(--pure-white); border-top: 1px solid var(--line); paddi
       </div>
       <div class="cf-row">
         <label class="cf-label" for="m-email">Work Email *</label>
-        <input class="cf-input" type="email" id="m-email" placeholder="you@company.com" required>
+        <input class="cf-input" type="email" id="m-email" placeholder="you@company.com" pattern="[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}" title="Please enter a valid email address" required>
       </div>
       <div class="cf-row">
         <label class="cf-label" for="m-phone">Contact Number *</label>
-        <input class="cf-input" type="tel" id="m-phone" placeholder="+91 98765 43210" required>
+        <input class="cf-input" type="tel" id="m-phone" placeholder="+91 98765 43210" pattern="[\+0-9\s\-]{10,20}" minlength="10" title="Please enter a valid phone number (minimum 10 digits, numbers, spaces, +, or -)" required>
       </div>
       <button type="submit" class="cf-submit">Notify Me →</button>
     </form>
