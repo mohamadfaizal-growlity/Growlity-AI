@@ -114,14 +114,36 @@ nav {
 }
 .logo-mark svg { width: 15px; height: 15px; }
 
-.nav-links { display: flex; align-items: center; gap: 28px; }
-.nav-links a { font-size: 13.5px; font-weight: 500; color: var(--text-dim); text-decoration: none; }
-.nav-links a:hover { color: var(--white); }
+.nav-links { display: flex; align-items: stretch; gap: 28px; position: absolute; left: 50%; transform: translateX(-50%); height: 100%; }
+.nav-item { position: relative; display: flex; align-items: center; height: 100%; }
+.nav-links a.nav-label { font-size: 13.5px; font-weight: 500; color: var(--bone, #0f172a); text-decoration: none; cursor: pointer; display: flex; align-items: center; gap: 4px; }
+.nav-links a.nav-label:hover { color: var(--jade, #4186f3); }
+
+/* Dropdowns */
+.nav-dropdown {
+  position: absolute; top: 100%; left: 50%; transform: translateX(-50%) translateY(10px); background: #ffffff;
+  border: 1px solid var(--line, #e2e8f0); border-radius: 8px; box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+  padding: 12px; opacity: 0; visibility: hidden; pointer-events: none; transition: all 0.2s ease; z-index: 200; min-width: 200px; display: flex; flex-direction: column; gap: 4px;
+}
+.nav-item:hover .nav-dropdown { opacity: 1; visibility: visible; pointer-events: auto; transform: translateX(-50%) translateY(0); }
+.nav-dropdown a { font-size: 13.5px; color: var(--text-dim, #475569); text-decoration: none; padding: 10px 12px; border-radius: 6px; display: block; white-space: nowrap; line-height: 1.2; }
+.nav-dropdown a:hover { background: rgba(65,134,243,.05); color: var(--jade, #4186f3); }
+
+/* Mega Menu */
+.nav-mega-menu {
+  left: 50%; transform: translateX(-50%) translateY(10px); width: 1000px;
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; padding: 24px;
+}
+.nav-item:hover .nav-mega-menu { transform: translateX(-50%) translateY(0); }
+.mega-col { display: flex; flex-direction: column; gap: 4px; }
+.mega-title { font-size: 15px; font-weight: 700; color: var(--jade, #4186f3); margin-bottom: 12px; padding-left: 12px; }
+.mega-col a { white-space: normal; line-height: 1.4; padding: 8px 12px; }
 
 .nav-end { display: flex; align-items: center; gap: 8px; }
 .n-signin { font-size: 13.5px; color: var(--text-dim); text-decoration: none; padding: 7px 14px; }
 .n-signin:hover { color: var(--white); }
 
+/* Force HMR reload */
 @media (max-width: 860px) { nav { padding: 0 20px; } .nav-links { display: none; } }
 
 /* ============================================================
@@ -531,22 +553,35 @@ h1 .hl { color: var(--secondary); }
 .cta-note { margin-top: 24px; font-size: 13px; color: var(--text-dim); position: relative; letter-spacing: 0.3px; }
 
 /* ============================================================
-   FOOTER
+   FOOTER (NEW)
    ============================================================ */
-footer { background: var(--pure-white); border-top: 1px solid var(--line); padding: 48px 32px 28px; }
-.fg { max-width: var(--container); margin: 0 auto 36px; display: grid; grid-template-columns: 1.8fr 1fr 1fr 1fr; gap: 36px; }
-.fb-tag { font-size: 13px; line-height: 1.6; color: var(--text-dim); max-width: 260px; margin-top: 12px; }
-.fc-col h4 { font-family: var(--font-display); font-weight: 700; font-size: 12px; color: var(--bone); letter-spacing: .5px; text-transform: uppercase; margin-bottom: 14px; }
-.fc-col a, .fc-col div { display: block; font-size: 13.5px; color: var(--text-dim); text-decoration: none; margin-bottom: 9px; }
-.fc-col a:hover { color: var(--jade); }
-.fb {
-  max-width: var(--container); margin: 0 auto; display: flex; align-items: center; justify-content: space-between;
-  border-top: 1px solid var(--line); padding-top: 22px; font-size: 12.5px; color: var(--text-dim2);
+.new-footer { padding: 64px 20px; background: var(--jade, #1877F2); border: none; color: #ffffff; border-radius: 32px 32px 0 0; margin-top: 40px; }
+.nf-container { 
+  max-width: 1200px; margin: 0 auto; 
 }
+.nf-top { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; align-items: center; }
+.nf-heading { font-family: var(--font-display, sans-serif); font-size: 36px; font-weight: 700; line-height: 1.2; letter-spacing: -1px; margin-top: 0; }
+.nf-newsletter h4 { font-family: var(--font-display, sans-serif); font-size: 18px; font-weight: 700; margin-bottom: 4px; }
+.nf-newsletter p { font-size: 13px; opacity: 0.9; margin-bottom: 12px; max-width: 400px; line-height: 1.4; }
+.nf-form { display: flex; flex-direction: row; gap: 8px; max-width: 100%; align-items: stretch; }
+.nf-form input { padding: 10px 14px; border-radius: 4px; border: none; font-size: 13px; width: 100%; min-width: 120px; outline: none; color: #333; }
+.nf-form button { background: var(--secondary, #3eac5c); color: white; border: none; padding: 10px 16px; border-radius: 4px; font-weight: 600; cursor: pointer; transition: opacity 0.2s; font-size: 13px; white-space: nowrap; }
+.nf-form button:hover { opacity: 0.9; }
+.nf-divider { height: 1px; background: rgba(255,255,255,0.2); margin: 40px 0; }
+.nf-bottom { display: grid; grid-template-columns: 1fr 1.5fr 1fr 1.2fr; gap: 24px; }
+.nf-col { display: flex; flex-direction: column; gap: 8px; }
+.nf-col a { color: #ffffff; text-decoration: none; font-size: 12px; font-weight: 600; transition: opacity 0.2s; }
+.nf-col a:hover { opacity: 0.8; text-decoration: underline; }
+.nf-contact h4 { font-family: var(--font-display, sans-serif); font-size: 14px; font-weight: 700; margin-bottom: 6px; }
+.nf-c-item { display: flex; gap: 8px; align-items: flex-start; font-size: 11px; line-height: 1.4; opacity: 0.9; }
+.nf-c-item svg { width: 14px; height: 14px; flex-shrink: 0; margin-top: 1px; }
+.nf-c-item a { font-weight: normal; font-size: 11px; }
 
 @media (max-width: 860px) {
-  .fg { grid-template-columns: 1fr 1fr; gap: 26px; }
-  footer { padding: 36px 20px 20px; }
+  .nf-container { padding: 40px 24px; }
+  .nf-top { grid-template-columns: 1fr; gap: 32px; }
+  .nf-heading { font-size: 36px; }
+  .nf-bottom { grid-template-columns: 1fr 1fr; }
   
   /* Full Mobile Optimizations */
   .contact-wrap { padding: 32px 20px; }
@@ -556,7 +591,11 @@ footer { background: var(--pure-white); border-top: 1px solid var(--line); paddi
   .hero { padding: 100px 20px 40px; }
   .hero-trust { gap: 12px; }
   .cta-sec { padding: 60px 20px; }
-  .fb { flex-direction: column; gap: 16px; text-align: center; }
+  .modal-box { padding: 24px; width: 95%; }
+  
+  @media (max-width: 600px) {
+    .nf-bottom { grid-template-columns: 1fr; gap: 40px; }
+  }
   .modal-box { padding: 24px; width: 95%; }
 }
 </style>
@@ -568,6 +607,82 @@ footer { background: var(--pure-white); border-top: 1px solid var(--line); paddi
   <a href="#" class="logo">
     <img src="/esg-intelligence/growlity-logo.png" alt="ESG Intelligence platform" style="height: 32px; width: auto;" />
   </a>
+
+  <div class="nav-links">
+    <!-- About us -->
+    <div class="nav-item">
+      <a class="nav-label">About us <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg></a>
+      <div class="nav-dropdown">
+        <a href="https://growlity.com/our-company">Our Company</a>
+        <a href="https://growlity.com/our-initiatives">Our Initiatives</a>
+        <a href="https://growlity.com/our-collaborations">Our Collaborations</a>
+        <a href="https://growlity.com/our-team">Our Team</a>
+        <a href="https://growlity.com/careers">Careers</a>
+      </div>
+    </div>
+
+    <!-- Services -->
+    <div class="nav-item">
+      <a class="nav-label">Services <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg></a>
+      <div class="nav-dropdown nav-mega-menu">
+        <div class="mega-col">
+          <div class="mega-title">Strategy and Advisory</div>
+          <a href="https://growlity.com/solutions/esg-assessment">ESG Assessment</a>
+          <a href="https://growlity.com/solutions/net-zero-and-decarbonisation">Net Zero &amp; Decarbonisation</a>
+          <a href="https://growlity.com/solutions/sbti-consulting">Science Based Targets Initiative (SBTi)</a>
+          <a href="https://growlity.com/solutions/lifecycle-assessment">Lifecycle Assessment (LCA)</a>
+          <a href="https://growlity.com/solutions/product-carbon-footprint-pcf">Product Carbon Footprint (PCF)</a>
+          <a href="https://growlity.com/solutions/sustainable-development-goals-reporting">Sustainable Development Goals</a>
+          <a href="https://growlity.com/solutions/carbon-credits">Carbon Credits</a>
+        </div>
+        <div class="mega-col">
+          <div class="mega-title">Ratings and Disclosures</div>
+          <a href="https://growlity.com/solutions/ecovadis-assessment">EcoVadis Assessment</a>
+          <a href="https://growlity.com/solutions/carbon-disclosure-project">Carbon Disclosure Project (CDP)</a>
+          <a href="https://growlity.com/solutions/environmental-product-declaration-epd">Environmental Product Declaration (EPD)</a>
+          <a href="https://growlity.com/solutions/sp-esg-score">S&amp;P ESG Score</a>
+          <a href="https://growlity.com/solutions/sustainalytics-esg-rating-support">Sustainalytics ESG Rating Support</a>
+        </div>
+        <div class="mega-col">
+          <div class="mega-title">Certifications</div>
+          <a href="https://growlity.com/solutions/rjc-certification">RJC Certification</a>
+          <a href="https://growlity.com/solutions/scs-007">SCS-007 (Diamonds)</a>
+          <a href="https://growlity.com/solutions/iso-certification">ISO Certification</a>
+          <a href="https://growlity.com/solutions/green-building-certification">Green Building Certification</a>
+          <a href="https://growlity.com/solutions/b-corp-certification-consulting">B-Corporation</a>
+          <a href="https://growlity.com/solutions/sa8000-consulting-services">SA8000 Consulting Services</a>
+        </div>
+        <div class="mega-col">
+          <div class="mega-title">Reporting and Training</div>
+          <a href="https://growlity.com/solutions/annual-sustainability-report-asr">Annual Sustainability Report (ASR)</a>
+          <a href="https://growlity.com/solutions/esg-reporting">ESG Reporting</a>
+          <a href="https://growlity.com/solution/business-responsibility-and-sustainability-reporting-brsr">BRSR</a>
+          <a href="https://growlity.com/solutions/materiality-assessment">Materiality Assessment</a>
+          <a href="https://growlity.com/solutions/ghg-emissions-inventory-accounting">GHG Emissions &amp; Inventory Accounting</a>
+          <a href="https://growlity.com/solutions/cbam-reporting-compliance">CBAM Reporting</a>
+          <a href="https://growlity.com/solutions/esg-assurance">ESG Assurance</a>
+          <a href="https://growlity.com/solutions/value-chain-partner-assessment">Value Chain Partner Assessment</a>
+          <a href="https://growlity.com/solutions/climate-risk-assessment">Climate Risk Assessment</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Customers -->
+    <div class="nav-item">
+      <a href="https://growlity.com/our-customers" class="nav-label">Customers</a>
+    </div>
+
+    <!-- Resources -->
+    <div class="nav-item">
+      <a class="nav-label">Resources <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg></a>
+      <div class="nav-dropdown">
+        <a href="https://growlity.com/blogs">Blogs</a>
+        <a href="https://growlity.com/case-studies">Case Studies</a>
+        <a href="https://growlity.com/webinars">Webinars</a>
+        <a href="https://growlity.com/esg-sustainability-publications">Publications</a>
+      </div>
+    </div>
+  </div>
 
   <div class="nav-end">
     <a href="#" onclick="event.preventDefault(); openModal();" class="btn btn-secondary">Book a Demo</a>
@@ -909,38 +1024,72 @@ footer { background: var(--pure-white); border-top: 1px solid var(--line); paddi
 </section>
 
 <!-- FOOTER -->
-<footer>
-  <div class="fg">
-    <div>
-      <a href="#" class="logo">
-        <img src="/esg-intelligence/growlity-logo.png" alt="ESG Intelligence platform" style="height: 32px; width: auto;" />
-      </a>
-      <p class="fb-tag">AI-native ESG growth Intelligence — built for enterprises that take sustainability beyond compliance.</p>
+<footer class="new-footer">
+  <div class="nf-container">
+    <div class="nf-top">
+      <div class="nf-heading">
+        Let's Discuss<br>Your Ideas
+      </div>
+      <div class="nf-newsletter">
+        <h4>Our Newsletter</h4>
+        <p>For our latest eco-friendly tips and planet positive hacks, subscribe below.</p>
+        <form class="nf-form" onsubmit="event.preventDefault(); alert('Subscribed!');">
+          <input type="text" placeholder="First Name" required>
+          <input type="email" placeholder="Email" required>
+          <button type="submit">Submit</button>
+        </form>
+      </div>
     </div>
-    <div class="fc-col">
-      <h4>Platform</h4>
-      <div>GHG Calculator</div>
-      <div>ESG Data Hub</div>
-      <div>ESG Score</div>
-      <div>AI Assistant</div>
-      <div>Dashboards</div>
+    <div class="nf-divider"></div>
+    <div class="nf-bottom">
+      <div class="nf-col">
+        <a href="https://growlity.com">Home</a>
+        <a href="https://growlity.com/our-company">About Us</a>
+        <a href="https://growlity.com/blogs">Blogs</a>
+        <a href="https://growlity.com/case-studies">Case Studies</a>
+        <a href="#contact">Contact Us</a>
+        <a href="#">ESG Report 2025</a>
+      </div>
+      <div class="nf-col">
+        <a href="https://growlity.com/solutions/ecovadis-assessment">EcoVadis Assessment</a>
+        <a href="https://growlity.com/solutions/net-zero-and-decarbonisation">Net Zero &amp; Decarbonisation</a>
+        <a href="https://growlity.com/solutions/carbon-disclosure-project">Carbon Disclosure Project (CDP)</a>
+        <a href="https://growlity.com/solutions/lifecycle-assessment">Lifecycle Assessment (LCA)</a>
+        <a href="https://growlity.com/solutions/rjc-certification">RJC Certification</a>
+        <a href="https://growlity.com/solutions/esg-reporting">ESG Reporting Services</a>
+      </div>
+      <div class="nf-col nf-contact">
+        <h4>Growlity, Inc.</h4>
+        <div class="nf-c-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+          <span>575, Fifth Avenue,<br>New York, NY 10017,<br>USA</span>
+        </div>
+        <div class="nf-c-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect><line x1="12" y1="18" x2="12.01" y2="18"></line></svg>
+          <span>+1 917 963 8963</span>
+        </div>
+        <div class="nf-c-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+          <a href="mailto:contact@growlity.com">contact@growlity.com</a>
+        </div>
+      </div>
+      <div class="nf-col nf-contact">
+        <h4>Growlity Private Limited</h4>
+        <div class="nf-c-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+          <span>316, Rajhans Montessa,<br>Airport Rd, Surat 395007,<br>India</span>
+        </div>
+        <div class="nf-c-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect><line x1="12" y1="18" x2="12.01" y2="18"></line></svg>
+          <span>+91 960 131 0999</span>
+        </div>
+        <div class="nf-c-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+          <a href="mailto:contact@growlity.com">contact@growlity.com</a>
+        </div>
+      </div>
     </div>
-    <div class="fc-col">
-      <h4>Frameworks</h4>
-      <div>BRSR Core</div>
-      <div>GRI 2021</div>
-    </div>
-    <div class="fc-col">
-      <h4>Company</h4>
-      <div>About Us</div>
-      <div>Blog</div>
-      <div>Careers</div>
-      <div>Contact</div>
-      <div>Privacy Policy</div>
-    </div>
-  </div>
-  <div class="fb">
-    <span>© 2026 ESG Intelligence platform · All rights reserved</span>
+
   </div>
 </footer>
 
@@ -1110,12 +1259,21 @@ footer { background: var(--pure-white); border-top: 1px solid var(--line); paddi
   }
 
   // Behavior for visitors from growlity.com (Wordpress site)
+  // We check referrer, OR if the link explicitly has ?notify=true (useful if WP strips referrers)
   const isFromWordpress = (document.referrer.includes('growlity.com') && !document.referrer.includes('/esg-intelligence')) || 
                           window.location.search.includes('test=growlity') ||
-                          window.location.hash === '#notify';
+                          window.location.search.includes('notify=true');
                           
   if (isFromWordpress) {
-    // Automatically show popup
+    // 1. Change popup 'Request a Demo' button to 'Notify me'
+    document.querySelectorAll('a, button').forEach(el => {
+      const text = el.textContent.trim();
+      if (text.includes('Request a Demo')) {
+        el.textContent = 'Notify me →';
+      }
+    });
+
+    // 2. Automatically show popup
     const triggerPopup = () => {
       setTimeout(() => {
         openNotifyModal();
