@@ -8,7 +8,7 @@ export const POST: APIRoute = async ({ request }) => {
     const data = await request.json();
     
     // Basic validation
-    if (!data.name || !data.email || !data.company) {
+    if (!data.name || data.name.trim().length < 3 || !data.email || !data.company || data.company.trim().length < 1) {
       return new Response(JSON.stringify({ error: "Missing required fields" }), {
         status: 400,
         headers: {
