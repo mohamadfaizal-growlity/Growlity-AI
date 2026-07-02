@@ -1028,11 +1028,8 @@ footer { background: var(--pure-white); border-top: 1px solid var(--line); paddi
       phone: form.querySelector('#m-phone').value
     };
 
-    document.getElementById('modal-form').style.display = 'none';
-    document.getElementById('modal-success').style.display = 'block';
-
     try {
-      await fetch('/api/contact', {
+      const res = await fetch('/esg-intelligence/api/contact', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -1042,8 +1039,16 @@ footer { background: var(--pure-white); border-top: 1px solid var(--line); paddi
           role: data.phone
         })
       });
+
+      if (res.ok) {
+        document.getElementById('modal-form').style.display = 'none';
+        document.getElementById('modal-success').style.display = 'block';
+      } else {
+        alert('Failed to submit form. Please try again.');
+      }
     } catch (err) {
       console.error(err);
+      alert('An error occurred. Please try again.');
     }
   }
 
@@ -1057,11 +1062,8 @@ footer { background: var(--pure-white); border-top: 1px solid var(--line); paddi
       phone: form.querySelector('#n-phone').value
     };
 
-    document.getElementById('notify-form').style.display = 'none';
-    document.getElementById('notify-success').style.display = 'block';
-
     try {
-      await fetch('/api/contact', {
+      const res = await fetch('/esg-intelligence/api/contact', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -1071,8 +1073,16 @@ footer { background: var(--pure-white); border-top: 1px solid var(--line); paddi
           role: data.phone
         })
       });
+
+      if (res.ok) {
+        document.getElementById('notify-form').style.display = 'none';
+        document.getElementById('notify-success').style.display = 'block';
+      } else {
+        alert('Failed to submit form. Please try again.');
+      }
     } catch (err) {
       console.error(err);
+      alert('An error occurred. Please try again.');
     }
   }
 
