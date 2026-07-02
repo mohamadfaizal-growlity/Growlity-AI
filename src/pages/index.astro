@@ -814,11 +814,11 @@ footer { background: var(--pure-white); border-top: 1px solid var(--line); paddi
     <form id="contact-form" onsubmit="handleContactSubmit(event)">
       <div class="cf-row">
         <label class="cf-label" for="cf-name">Full Name *</label>
-        <input class="cf-input" type="text" id="cf-name" name="name" placeholder="e.g. Priya Sharma" required>
+        <input class="cf-input" type="text" id="cf-name" name="name" placeholder="e.g. Priya Sharma" pattern="[a-zA-Z\s\-]{2,50}" minlength="2" title="Please enter a valid name (letters only, minimum 2 characters)" required>
       </div>
       <div class="cf-row">
         <label class="cf-label" for="cf-org">Organization *</label>
-        <input class="cf-input" type="text" id="cf-org" name="organization" placeholder="e.g. Mahindra Group" required>
+        <input class="cf-input" type="text" id="cf-org" name="organization" placeholder="e.g. Mahindra Group" minlength="2" title="Please enter a valid organization name (minimum 2 characters)" required>
       </div>
       <div class="cf-row">
         <label class="cf-label" for="cf-email">Work Email *</label>
@@ -848,11 +848,11 @@ footer { background: var(--pure-white); border-top: 1px solid var(--line); paddi
     <form id="modal-form" onsubmit="handleModalSubmit(event)">
       <div class="cf-row">
         <label class="cf-label" for="m-name">Full Name *</label>
-        <input class="cf-input" type="text" id="m-name" placeholder="Your name" required>
+        <input class="cf-input" type="text" id="m-name" placeholder="Your name" pattern="[a-zA-Z\s\-]{2,50}" minlength="2" title="Please enter a valid name (letters only, minimum 2 characters)" required>
       </div>
       <div class="cf-row">
         <label class="cf-label" for="m-org">Organization *</label>
-        <input class="cf-input" type="text" id="m-org" placeholder="Your company" required>
+        <input class="cf-input" type="text" id="m-org" placeholder="Your company" minlength="2" title="Please enter a valid organization name (minimum 2 characters)" required>
       </div>
       <div class="cf-row">
         <label class="cf-label" for="m-email">Work Email *</label>
