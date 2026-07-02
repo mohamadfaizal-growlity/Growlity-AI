@@ -709,12 +709,7 @@ h1 .hl { color: var(--secondary); }
   <!-- Product preview -->
   <div class="screen-wrap">
     <div class="browser">
-      <div class="browser-bar">
-        <div class="bt bt-r"></div>
-        <div class="bt bt-y"></div>
-        <div class="bt bt-g"></div>
-        <div class="b-url">app.growlity.ai/dashboard</div>
-      </div>
+
       <img src="/esg-intelligence/White%20Blue%20Gray%20Modern%20Minimalist%20Manufacture%20Production%20Dashboard%20Website%20Desktop%20Prototype%201.png" alt="GHG Dashboard Overview" style="width: 100%; display: block;" />
     </div>
   </div>
@@ -1182,11 +1177,8 @@ h1 .hl { color: var(--secondary); }
       phone: form.querySelector('#m-phone').value
     };
 
-    document.getElementById('modal-form').style.display = 'none';
-    document.getElementById('modal-success').style.display = 'block';
-
     try {
-      await fetch('/api/contact', {
+      const res = await fetch('/esg-intelligence/api/contact', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -1196,8 +1188,16 @@ h1 .hl { color: var(--secondary); }
           role: data.phone
         })
       });
+
+      if (res.ok) {
+        document.getElementById('modal-form').style.display = 'none';
+        document.getElementById('modal-success').style.display = 'block';
+      } else {
+        alert('Failed to submit form. Please try again.');
+      }
     } catch (err) {
       console.error(err);
+      alert('An error occurred. Please try again.');
     }
   }
 
@@ -1211,11 +1211,8 @@ h1 .hl { color: var(--secondary); }
       phone: form.querySelector('#n-phone').value
     };
 
-    document.getElementById('notify-form').style.display = 'none';
-    document.getElementById('notify-success').style.display = 'block';
-
     try {
-      await fetch('/api/contact', {
+      const res = await fetch('/esg-intelligence/api/contact', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -1225,8 +1222,16 @@ h1 .hl { color: var(--secondary); }
           role: data.phone
         })
       });
+
+      if (res.ok) {
+        document.getElementById('notify-form').style.display = 'none';
+        document.getElementById('notify-success').style.display = 'block';
+      } else {
+        alert('Failed to submit form. Please try again.');
+      }
     } catch (err) {
       console.error(err);
+      alert('An error occurred. Please try again.');
     }
   }
 
