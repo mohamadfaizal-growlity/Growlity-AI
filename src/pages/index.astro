@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>ESG intelligence platform — ESG Growth Intelligence</title>
-<link rel="icon" type="image/png" href="/growlity-icon.png" />
+<link rel="icon" type="image/png" href="/esg-intelligence/growlity-icon.png" />
 <!-- AOS CSS -->
 <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 <style>
@@ -600,7 +600,7 @@ footer { background: var(--pure-white); border-top: 1px solid var(--line); paddi
         <div class="bt bt-g"></div>
         <div class="b-url">app.growlity.ai/dashboard</div>
       </div>
-      <img src="/esg-intelligence/GHG%20image1.png" alt="GHG Dashboard Overview" style="width: 100%; display: block;" />
+      <img src="/esg-intelligence/White%20Blue%20Gray%20Modern%20Minimalist%20Manufacture%20Production%20Dashboard%20Website%20Desktop%20Prototype%201.png" alt="GHG Dashboard Overview" style="width: 100%; display: block;" />
     </div>
   </div>
 </section>
@@ -728,8 +728,8 @@ footer { background: var(--pure-white); border-top: 1px solid var(--line); paddi
 <!-- SPLIT 2 — Reports -->
 <section class="section section--light">
   <div class="con">
-    <div class="split flip" data-aos="fade-up">
-      <img src="/esg-intelligence/Report-dashboard.png" alt="Report Dashboard" style="width: 100%; height: auto; border-radius: 12px; display: block; box-shadow: 0 20px 48px rgba(0,0,0,0.15); border: 1px solid rgba(0,0,0,0.05);" />
+    <div class="split" data-aos="fade-up">
+      <img src="/esg-intelligence/Blue%20Modern%20KPI%20Dashboard%20Presentation.png" alt="Report Dashboard" style="width: 100%; height: auto; border-radius: 12px; display: block; box-shadow: 0 20px 48px rgba(0,0,0,0.15); border: 1px solid rgba(0,0,0,0.05);" />
       <div>
         <p class="eyebrow">Multi-Framework Reports</p>
         <h2 class="section-title">One dataset. Every report. Zero duplication.</h2>
@@ -766,7 +766,7 @@ footer { background: var(--pure-white); border-top: 1px solid var(--line); paddi
       </div>
       <div class="split-vis">
         <!-- Placeholder for AI Assistant image. Reusing Report-dashboard.png for layout demonstration -->
-        <img src="/esg-intelligence/Report-dashboard.png" alt="AI ESG Assistant" style="width: 100%; height: auto; border-radius: 12px; display: block; box-shadow: 0 20px 48px rgba(0,0,0,0.15); border: 1px solid rgba(0,0,0,0.05); filter: hue-rotate(15deg);" />
+        <img src="/esg-intelligence/image%20(1).png" alt="AI ESG Assistant" style="width: 100%; height: auto; border-radius: 12px; display: block; box-shadow: 0 20px 48px rgba(0,0,0,0.15); border: 1px solid rgba(0,0,0,0.05); filter: hue-rotate(15deg);" />
       </div>
     </div>
   </div>
@@ -1028,7 +1028,8 @@ footer { background: var(--pure-white); border-top: 1px solid var(--line); paddi
 
   // Behavior for visitors from growlity.com (Wordpress site)
   const isFromWordpress = (document.referrer.includes('growlity.com') && !document.referrer.includes('/esg-intelligence')) || 
-                          window.location.search.includes('test=growlity');
+                          window.location.search.includes('test=growlity') ||
+                          window.location.hash === '#notify';
                           
   if (isFromWordpress) {
     // 1. Change popup 'Request a Demo' button to 'Notify me'
