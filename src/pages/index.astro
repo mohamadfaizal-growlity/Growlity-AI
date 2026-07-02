@@ -1007,6 +1007,19 @@ footer { background: var(--pure-white); border-top: 1px solid var(--line); paddi
   if (window.location.hash === '#contact' || window.location.hash === '#notify') {
     setTimeout(openModal, 100);
   }
+
+  // Dynamic button text change for visitors from growlity.com
+  const fromGrowlity = window.location.hostname.includes('growlity.com') || document.referrer.includes('growlity.com');
+  if (fromGrowlity) {
+    document.querySelectorAll('a, button').forEach(el => {
+      const text = el.textContent.trim();
+      if (text === 'Book a Demo' || text === 'Schedule a Live Demo') {
+        el.textContent = 'Notify me';
+      } else if (text === 'Request a Demo →') {
+        el.textContent = 'Notify me →';
+      }
+    });
+  }
 </script>
 
 </body>
