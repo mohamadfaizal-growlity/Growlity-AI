@@ -5,3 +5,4 @@ dist/
 growlity-landing-clean.backup.html
 
 /src/generated/prisma
+.vercel/
