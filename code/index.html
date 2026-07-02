@@ -111,30 +111,31 @@ From carbon accounting to ESG reporting, our AI-powered sustainability intellige
     });
   });
 
-  // UNIVERSAL AUTO-OPEN LOGIC (Once per session)
-  window.addEventListener('load', () => {
-    if (!sessionStorage.getItem('popupShown')) {
-      setTimeout(() => {
-        openModal();
-        sessionStorage.setItem('popupShown', 'true');
-      }, 500); // 500ms delay so they see the page first
-    }
-  });
-
   // Keep hash check for direct links
   if (window.location.hash === '#contact' || window.location.hash === '#notify') {
     setTimeout(openModal, 100);
   }
 
-  // Dynamic button text change for visitors from growlity.com
+  // Behavior for visitors from growlity.com (reverse-proxied or referred)
   const fromGrowlity = window.location.hostname.includes('growlity.com') || document.referrer.includes('growlity.com');
   if (fromGrowlity) {
+    // 1. Change 'Book a Demo' buttons to 'Notify me'
     document.querySelectorAll('a, button').forEach(el => {
       const text = el.textContent.trim();
       if (text === 'Book a Demo' || text === 'Schedule a Live Demo') {
         el.textContent = 'Notify me';
       } else if (text === 'Request a Demo →') {
         el.textContent = 'Notify me →';
+      }
+    });
+
+    // 2. Automatically show popup (once per session)
+    window.addEventListener('load', () => {
+      if (!sessionStorage.getItem('popupShown')) {
+        setTimeout(() => {
+          openModal();
+          sessionStorage.setItem('popupShown', 'true');
+        }, 500); // 500ms delay so they see the page first
       }
     });
   }
