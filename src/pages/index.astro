@@ -144,7 +144,60 @@ nav {
 .n-signin:hover { color: var(--white); }
 
 /* Force HMR reload */
-@media (max-width: 860px) { nav { padding: 0 20px; } .nav-links { display: none; } }
+.mobile-menu-btn {
+  display: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+  color: var(--bone);
+}
+.mobile-menu-btn svg { width: 24px; height: 24px; }
+
+@media (max-width: 860px) { 
+  nav { padding: 0 20px; } 
+  .mobile-menu-btn { display: block; margin-left: 12px; }
+  .nav-end { display: flex; align-items: center; }
+  .nav-links { 
+    display: none; 
+    position: fixed;
+    top: 62px;
+    left: 0;
+    width: 100%;
+    height: calc(100vh - 62px);
+    background: #ffffff;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 24px;
+    gap: 0;
+    overflow-y: auto;
+    transform: none;
+  }
+  .nav-links.active { display: flex; }
+  .nav-item { height: auto; width: 100%; flex-direction: column; align-items: flex-start; }
+  .nav-links a.nav-label { width: 100%; padding: 16px 0; justify-content: space-between; border-bottom: 1px solid var(--line); font-size: 16px; }
+  .nav-dropdown, .nav-mega-menu {
+    position: static !important;
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transform: none !important;
+    box-shadow: none;
+    border: none;
+    width: 100% !important;
+    padding: 12px 0 12px 16px;
+    display: none;
+    flex-direction: column;
+  }
+  .nav-item.open .nav-dropdown, 
+  .nav-item.open .nav-mega-menu,
+  .nav-item:hover .nav-dropdown,
+  .nav-item:hover .nav-mega-menu { 
+    display: flex; 
+    transform: none !important;
+  }
+  .nav-mega-menu { gap: 16px; display: none; }
+}
 
 /* ============================================================
    HERO
@@ -686,6 +739,13 @@ h1 .hl { color: var(--secondary); }
 
   <div class="nav-end">
     <a href="#" onclick="event.preventDefault(); openModal();" class="btn btn-secondary">Book a Demo</a>
+    <button class="mobile-menu-btn" onclick="toggleMobileMenu()" aria-label="Toggle menu">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="3" y1="12" x2="21" y2="12"></line>
+        <line x1="3" y1="6" x2="21" y2="6"></line>
+        <line x1="3" y1="18" x2="21" y2="18"></line>
+      </svg>
+    </button>
   </div>
 </nav>
 
@@ -1107,6 +1167,42 @@ h1 .hl { color: var(--secondary); }
           offset: 50,      // The animation triggers when the element is 50px away from the viewport
       });
   }
+
+  // Mobile Menu Logic
+  function toggleMobileMenu() {
+    const navLinks = document.querySelector('.nav-links');
+    navLinks.classList.toggle('active');
+    
+    // Update hamburger icon to close icon if active
+    const btnSvg = document.querySelector('.mobile-menu-btn svg');
+    if (navLinks.classList.contains('active')) {
+      btnSvg.innerHTML = '<line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line>';
+      document.body.style.overflow = 'hidden';
+    } else {
+      btnSvg.innerHTML = '<line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line>';
+      document.body.style.overflow = '';
+    }
+  }
+
+  // Mobile Menu Dropdown Toggle
+  document.querySelectorAll('.nav-item').forEach(item => {
+    const label = item.querySelector('.nav-label');
+    if (label) {
+      label.addEventListener('click', (e) => {
+        if (window.innerWidth <= 860 && item.querySelector('.nav-dropdown')) {
+          e.preventDefault();
+          item.classList.toggle('open');
+          
+          // Close other open items
+          document.querySelectorAll('.nav-item.open').forEach(openItem => {
+            if (openItem !== item) {
+              openItem.classList.remove('open');
+            }
+          });
+        }
+      });
+    }
+  });
 
   // Number Counter Logic
   const stats = document.querySelectorAll('.stat-num');
